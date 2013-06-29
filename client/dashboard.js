@@ -25,12 +25,11 @@ Template.widget.events({
     'click': function (event) {
         console.log(event.which);
         console.log(this.widgetType);
-        console.log(this._id);
-        Dashboards.update({_id: Dashboards.findOne()._id}, {widgets: 
-        	[ {
+        console.log(this.widgetId);
+        var updatedWidgets = [ {
         widgetType: "StickyNotes",
         data: {
-          content: "Bleh more.",
+          content: "Bleh.",
           style: "color: blue;"
         },
         position: {x: 0, y: 0}
@@ -42,7 +41,9 @@ Template.widget.events({
           style: "color: red;"
         },
         position: {x: 1, y: 1}
-      } ]
+      } ];
+        Dashboards.update({_id: Dashboards.findOne()._id}, 
+        	{ widgets: updatedWidgets,
         });
     },
 
