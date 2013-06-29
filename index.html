@@ -1,18 +1,21 @@
 <head>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
-	<title>Dashboard</title>
+<title>Dashboard</title>
 </head>
 
 <body>
-    {{> dashboard}}
+{{> dashboard}}
 </body>
 
 <template name="dashboard">
 <div class="dashboard">
-  {{dashboard.name}}
-  {{#each dashboard.widgets}}
-    {{> widget}}
-  {{/each}}
+  <header>
+    <h1>{{dashboard.name}}</h1>
+  </header>
+  <div id="widgets">
+    {{#each dashboard.widgets}}
+      {{> widget}}
+    {{/each}}
+  </div>
 </div>
 </template>
 
