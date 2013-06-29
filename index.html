@@ -8,18 +8,16 @@
 
 <template name="dashboard">
 	<div class="dashboard">
-		
-			{{dashboard.name}}
-			{{#each dashboard.widgets}}
-				{{>widget}}
-			{{/each}}
-		
+		{{dashboard.name}}
+		{{#each dashboard.widgets}}
+			{{> widget}}
+		{{/each}}
 	</div>
 </template>
 
 <template name="widget">
 	<div class="widget">
-	hello
-		{{this.widget}}
+		hello
+		{{this.data}}
 	</div>
 </template>

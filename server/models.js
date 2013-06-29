@@ -1,5 +1,4 @@
 Dashboards = new Meteor.Collection("dashboards");
-Widgets = new Meteor.Collection("widgets");
 WidgetTypes = new Meteor.Collection("widgetTypes");
 
 Meteor.startup(function() {
@@ -16,20 +15,21 @@ Meteor.startup(function() {
 		})
 	}
 
-	if(Widgets.find().count() === 0) {
-		var widgetId = Widgets.insert({
-			widgetType: "stickyNotes",
-			data: "Bleh."
-		})
-	}
-
 	if(Dashboards.find().count() === 0) {
-		console.log("Created Dashboard with widgetId " + widgetId);
 		Dashboards.insert({
 			name: "Test Dashboard",
 			widgets: [
-				{ widget: widgetId, position: {x: 0, y: 0} }
+				{
+					widgetType: "stickyNotes",
+					data: "Bleh.",
+					position: {x: 0, y: 0} 
+				},
+				{
+					widgetType: "stickyNotes",
+					data: "Bleh2.",
+					position: {x: 1, y: 1} 
+				}
 			]
-		})
+		});
 	}
-})
+});
