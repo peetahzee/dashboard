@@ -1,6 +1,5 @@
 Dashboards = new Meteor.Collection("dashboards", {
   transform: function(doc) {
-    console.log("transforming", doc);
     for (var i = 0; i < doc.widgets.length; i++) {
       w = doc.widgets[i];
       doc.widgets[i] = eval("new " + w.widgetType + "(w)");
@@ -32,16 +31,14 @@ Template.widget.events({
         );
     },
 
-    'mouseenter': function(event) {
-        console.log(event);
-        console.log(this);
-        event.srcElement.style.opacity = "0.5";
-        event.srcElement.style.border = "1px black dotted";
-    },
-
     'mouseleave': function(e) {
         e.srcElement.style.opacity = "1";
         e.srcElement.style.border = "";
     },
 });
+
+Template.widget.rendered = function() {
+    var idName = "#widget_" + this.data.widgetId;
+    $(idName).resizable();
+}
 
