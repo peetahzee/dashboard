@@ -22,12 +22,18 @@ Meteor.startup(function() {
 				{
 					widgetType: "stickyNotes",
 					data: "Bleh.",
-					position: {x: 0, y: 0} 
+					position: {x: 0, y: 0, width: 10, height: 10},
+                    color: "pink",
+                    font: "",
+                    textColor: "blue"
 				},
 				{
 					widgetType: "stickyNotes",
 					data: "Bleh2.",
-					position: {x: 1, y: 1} 
+					position: {x: 1, y: 1, width: 20, height: 20},
+                    color: "blue",
+                    font: "",
+                    textColor: "pink"
 				}
 			]
 		});

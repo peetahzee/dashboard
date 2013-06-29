@@ -1,4 +1,5 @@
 <head>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<title>Dashboard</title>
 </head>
 
@@ -16,8 +17,10 @@
 </template>
 
 <template name="widget">
-	<div class="widget">
+    <div class="widget">
 		hello
-		{{this.data}}
+        {{this.data}}
+        {{this.position.x}}
+        {{this.position.width}}
 	</div>
 </template>
