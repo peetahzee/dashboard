@@ -4,23 +4,18 @@
 </head>
 
 <body>
-	{{> dashboard}}
+    {{> dashboard}}
 </body>
 
 <template name="dashboard">
-	<div class="dashboard">
-		{{dashboard.name}}
-		{{#each dashboard.widgets}}
-			{{> widget}}
-		{{/each}}
-	</div>
+<div class="dashboard">
+  {{dashboard.name}}
+  {{#each dashboard.widgets}}
+    {{> widget}}
+  {{/each}}
+</div>
 </template>
 
 <template name="widget">
-    <div class="widget">
-		hello
-        {{this.data}}
-        {{this.position.x}}
-        {{this.position.width}}
-	</div>
+  {{{html}}}
 </template>
