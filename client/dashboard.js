@@ -16,15 +16,7 @@ var dashbaord = null;
 var widgets = null;
 
 Template.dashboard.dashboard = function() {
-<<<<<<< HEAD
-	return Dashboards.findOne();
-}
-
-Template.widget.getData = function() {
-	return "hello " + WidgetTypes.findOne({slug: this.widgetType}).getData.call(this);
-}
-=======
   dashboard = Dashboards.findOne();
   return dashboard;
 };
->>>>>>> origin/ptz
+
