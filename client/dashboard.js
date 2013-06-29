@@ -13,11 +13,18 @@ Dashboards = new Meteor.Collection("dashboards", {
 Widgets = new Meteor.Collection("widgets");
 WidgetTypes = new Meteor.Collection("widgetTypes");
 
-var dashbaord = null;
+var dashboard = null;
 var widgets = null;
 
 Template.dashboard.dashboard = function() {
 	return Dashboards.findOne();
+}
+
+Template.dashboard.created = function() {
+    console.log(this.dashboard);
+
+    console.log("blargl " + this._id);
+    Session.set("db", this._id);
 }
 
 Template.widget.events({
@@ -33,6 +40,20 @@ Template.widget.events({
 
 Template.widget.rendered = function() {
     var idName = "#widget_" + this.data.widgetId;
-    $(idName).resizable();
+    widgetId = this.data.widgetId;
+
+
+    $(idName).resizable({
+        stop: function(event, ui) {
+            console.log(Session.get("db"));
+            Dashboards.update(Session.get("db"),
+                {
+                    $set: {
+                        // 'widgets.' + widgetId + '.height': ui.size.height,
+                        //'widgets.' + widgetId + '.width': ui.size.width
+                        }
+                });
+        }
+    });
 }
 

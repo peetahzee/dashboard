@@ -11,7 +11,9 @@ Meteor.startup(function() {
           content: "Bleh.",
           style: "color: blue;"
         },
-        position: {x: 0, y: 0}
+        position: {x: 0, y: 0},
+        width: 10,
+        height: 10
       },
       {
         widgetType: "StickyNotes",
@@ -19,8 +21,11 @@ Meteor.startup(function() {
           content: "Bleh2.",
           style: "color: red;"
         },
-        position: {x: 1, y: 1}
+        position: {x: 1, y: 1},
+        width:10,
+        height:10
       } ]
     });
   }
 });
+
