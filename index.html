@@ -1,23 +1,22 @@
 <head>
-	<title>Dashboard</title>
+<title>Dashboard</title>
 </head>
 
 <body>
-	{{> dashboard}}
+{{> dashboard}}
 </body>
 
 <template name="dashboard">
-	<div class="dashboard">
-		{{dashboard.name}}
-		{{#each dashboard.widgets}}
-			{{> widget}}
-		{{/each}}
-	</div>
+<div class="dashboard">
+  {{dashboard.name}}
+  {{#each dashboard.widgets}}
+    {{> widget}}
+  {{/each}}
+</div>
 </template>
 
 <template name="widget">
-	<div class="widget">
-		hello
-		{{this.data}}
-	</div>
+<div class="widget" style="{{data.style}}">
+  {{data.html}}
+</div>
 </template>
