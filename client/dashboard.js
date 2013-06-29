@@ -13,11 +13,12 @@ Dashboards = new Meteor.Collection("dashboards", {
 Widgets = new Meteor.Collection("widgets");
 WidgetTypes = new Meteor.Collection("widgetTypes");
 
-var dashbaord = null;
+var dashboard = null;
 var widgets = null;
 
 Template.dashboard.dashboard = function() {
-	return Dashboards.findOne();
+	dashboard = Dashboards.findOne();
+	return dashboard;
 }
 
 
@@ -26,25 +27,9 @@ Template.widget.events({
         console.log(event.which);
         console.log(this.widgetType);
         console.log(this.widgetId);
-        var updatedWidgets = [ {
-        widgetType: "StickyNotes",
-        data: {
-          content: "Bleh.",
-          style: "color: blue;"
-        },
-        position: {x: 0, y: 0}
-      },
-      {
-        widgetType: "StickyNotes",
-        data: {
-          content: "Bleh2.",
-          style: "color: red;"
-        },
-        position: {x: 1, y: 1}
-      } ];
-        Dashboards.update({_id: Dashboards.findOne()._id}, 
-        	{ widgets: updatedWidgets,
-        });
+        Dashboards.update({_id: dashboard._id}, 
+        	{ '$set': {'widgets.0.data.content': 'hello5'} }
+        );
     },
 
     'mouseenter': function(event) {
