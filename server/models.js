@@ -7,7 +7,7 @@ Meteor.startup(function() {
 			name: "Sticky Notes",
 			slug: "stickyNotes",
 			getData: function() {
-				return "Hello World";
+				return "Hello World ";
 			},
 			render: function(data) {
 				console.log(data);
