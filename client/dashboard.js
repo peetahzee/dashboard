@@ -4,6 +4,7 @@ Dashboards = new Meteor.Collection("dashboards", {
     for (var i = 0; i < doc.widgets.length; i++) {
       w = doc.widgets[i];
       doc.widgets[i] = eval("new " + w.widgetType + "(w)");
+      doc.widgets[i].widgetId = i;
       doc.widgets[i].render();
     }
     return doc;
