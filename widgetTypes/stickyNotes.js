@@ -4,8 +4,9 @@ StickyNotes = function(widget) {
 
 _.extend(StickyNotes.prototype, {
   render: function() {
-    console.log('extending', this);
-    console.log(this.data);
-    this.html = "<p>soemthign</p>";
+    this.html = '<div style="'+ this.data.style + '">';
+    this.html += '<h2>Sticky Note</h2>';
+    this.html += this.data.content;
+    this.html += '</div>';
   }
 });
