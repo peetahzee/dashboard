@@ -1,0 +1,25 @@
+<head>
+	<title>Dashboard</title>
+</head>
+
+<body>
+	{{> dashboard}}
+</body>
+
+<template name="dashboard">
+	<div class="dashboard">
+		
+			{{dashboard.name}}
+			{{#each dashboard.widgets}}
+				{{>widget}}
+			{{/each}}
+		
+	</div>
+</template>
+
+<template name="widget">
+	<div class="widget">
+	hello
+		{{this.widget}}
+	</div>
+</template>
