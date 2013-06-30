@@ -238,7 +238,7 @@ h1 {
 
 .ui-resizable-handle { z-index: auto !important; }
 
-@media screen and (max-device-width: 640px), screen and (max-width: 640px) { 
+@media screen and (max-device-width: 640px), screen and (max-width: 640px) {
   body, html {
     overflow-y: auto;
     height: auto;
@@ -251,11 +251,19 @@ h1 {
     left: auto;
   }
 }
-
 svg {
   fill: teal;
 }
 .scoreBoard {
     padding: 20px;
     height: 500px;
+}
+.innerHeader h2,
+.innerHeader .newCol,
+.innerHeader .addCol {
+    display: inline-block;
+}
+
+.innerHeader h2 {
+    margin-right: 10px;
 }

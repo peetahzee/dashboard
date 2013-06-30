@@ -39,7 +39,7 @@ _.extend(Latitude.prototype, {
         this.map.setCenter(marker.getPosition());
         user = Meteor.users.findOne({_id: location.userId});
         if (user) {
-          var content = "<div>" + user.username + "</div>"; 
+          var content = "<div>" + user.username + "</div>";
           var geocoder = new google.maps.Geocoder();
           geocoder.geocode({
             "latLng": wp

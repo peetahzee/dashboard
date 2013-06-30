@@ -9,34 +9,40 @@ _.extend(ScoreBoard.prototype, {
     render: function() {
         this.html = this.generateHeader();
 
-        this.html += "<h2>Board of Doom</h2><div id='newCol'><button id='addCol' class='add'>+</button></div>";
+        this.html += "<div class='innerHeader'><h2>Board of Doom</h2><div class='newCol'><button class='addCol' class='add'>+</button></div></div>";
         this.html += this.generateFooter();
-
-        var dblClick = false;
     },
     getData: function() {
         this.render();
     },
-    clicked: function() {
-        // TODO Hasn't been implemented yet.
-    },
     rendered: function() {
         var self = this;
+        this.setupResizeDragDelete();
+
         if (!self.drawBarGraph) {
             self.drawBarGraph = Meteor.autorun(function() {
                 drawGraph(self)
             });
         }
 
-        var selectedItemId = null;
-
         var widgetInDom = this.widgetInDom();
         widgetInDom.unbind();
+        widgetInDom.find("button#addCol").unbind();
 
-        self.setupResizeDragDelete();
+        if(!widgetInDom.is('.ui-resizable')) {
+            widgetInDom.resizable({
+                stop: function(event, ui) {
+                          Widgets.update(widget._id, { $set: { 'height': ui.size.height, 'width': ui.size.width } });
+                }
+            });
+            this.widgetInDom().draggable({
+                stop: function(event, ui) {
+                          Widgets.update(widget._id, { $set: { 'position.x': ui.position.left, 'position.y': ui.position.top } });
+                      }
+            });
+        }
 
         widgetInDom.find(".barRect").click(function(d) {
-            selectedItemid = self._id;
             barClickHandler(d, self, $(this));
         });
 
@@ -59,8 +65,8 @@ _.extend(ScoreBoard.prototype, {
             Widgets.update(self._id, { $set: toSet });
         });
 
-        widgetInDom.find("button#addCol").unbind();
-        widgetInDom.find("button#addCol").click(function(d) {
+        widgetInDom.find("button.addCol").click(function(d) {
+            console.log("blargl");
             toSet = {};
             toSet['data.content'] = {'key': 'New Column', 'score': 0};
 
@@ -97,17 +103,17 @@ _.extend(ScoreBoard.prototype, {
             return false;
         });
 
-        widgetInDom.find(".barName").hover(function() {
+        widgetInDom.find(".barRect").mouseover(function() {
+            var temp = d3.select(this).attr("opacity", "0.5");
+        }).mouseleave(function() {
+            var temp = d3.select(this).attr("opacity", "");
         });
 
-        widgetInDom.find(".barRect").hover(function() {
-            var temp = d3.select(this)
-                            .attr("opacity", "0.5");
-        });
-
-        widgetInDom.find(".barRect").mouseleave(function() {
-            /* var temp = d3.select(this)
-                            .attr("opacity", ""); */
+        widgetInDom.find(".barName").mouseover(function() {
+            $(".barName").css("display", "none");
+            $(this).css("display", "block");
+        }).mouseleave(function() {
+            $(".barName").css("display", "block");
         });
     }
 });
@@ -184,7 +190,12 @@ var drawGraph = function(self) {
             return i * (w / values.length) + (w / values.length - 5) / 2;
         })
         .attr("y", function(d) {
-            return h - ((d.score * h) / valuesMax) + 14;
+            ret_val = h - ((d.score * h) / valuesMax) + 14;
+            if (d.score === 0) {
+                return ret_val - 20;
+            } else {
+                return ret_val;
+            }
         })
         .attr("font-family", "sans-serif")
         .attr("font-size", "14px")
@@ -245,7 +256,9 @@ NewScoreBoard = function () {
                          {key: "Ali", score: 3}
                      ]
         },
-        position: {x: 0, y: 0}
+        position: {x: 0, y: 0},
+        width: 500,
+        height: 500
     };
 }
 
