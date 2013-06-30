@@ -135,8 +135,8 @@ var drawGraph = function(self) {
     widgetDivId = "#widget_" + self.widgetId;
 
     var w = $(widgetDivId).width();
-    var bottomHeight = 60;
-    var h = $(widgetDivId).height() - 2 * bottomHeight;
+    var bottomHeight = 120;
+    var h = $(widgetDivId).height() - bottomHeight;
 
     var values = [];
     for (var index in self.data.content) {
@@ -204,7 +204,7 @@ var drawGraph = function(self) {
         .attr("x", function(d, i) {
             return i * (w / values.length) + (w / values.length - 5) / 2;
         })
-        .attr("y", h + bottomHeight - bottomHeight / 2)
+        .attr("y", h + bottomHeight / 5)
         .attr("dy", ".36em")
         .attr("text-anchor", "middle")
         .attr('class', 'name')
