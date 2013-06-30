@@ -73,6 +73,10 @@ _.extend(Latitude.prototype, {
     mapTypeId: google.maps.MapTypeId.ROADMAP
   };
   this.map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+  google.maps.event.addListener(this.map, 'click', function(event) {
+    console.log("map clicked!");
+    return false;
+  });
   console.log("endMap");
 }
      
