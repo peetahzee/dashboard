@@ -9,8 +9,10 @@ _.extend(ScoreBoard.prototype, {
     render: function() {
         this.html = this.generateHeader();
 
-        this.html += "<h2>Board of Doom</h2><div id='newCol'><button id='addCol' class='add'>+</button></div>";
+        this.html += "<h2>Board of Doom</h2><div id='newCol'><button id='addCol' class='add'>+</button></div><div><button id='editTable' class='edit'>E</button></div>";
         this.html += this.generateFooter();
+
+        var dblClick = false;
     },
     getData: function() {
         this.render();
@@ -26,8 +28,6 @@ _.extend(ScoreBoard.prototype, {
             });
         }
 
-        self.dblClick = false;
-
         var widgetInDom = this.widgetInDom();
         widgetInDom.unbind();
 
@@ -39,43 +39,71 @@ _.extend(ScoreBoard.prototype, {
 
         widgetInDom.find(".barName").click(function(d) {
             if ($(this).attr("value")) {
-                barClickHandler(d, self, $(this));
+                setTimeout(barClickHandler(d, self, $(this)), 500);
             }
         });
 
-        widgetInDom.find(".barName").dblclick(function (d) {
-            self.dblClick = true;
-            var newValue = window.prompt("Please insert new name:");
-            if (newValue == null) {
-                return;
-            }
-            var tempArray = self.data.content;
-            var key = $(this).attr("key");
+        widgetInDom.find("button#editTable").click(function (d) {
+            console.log("hate this");
 
-            for (var index in tempArray) {
-                if (tempArray[index].key == key) {
-                    break;
+            var widgetId = "#widget_" + self.widgetId;
+
+            var vis = d3.select(widgetId);
+            vis.select("svg").remove();
+
+            var htmlInner = "<table class='editBarChart'>";
+            htmlInner += "<tr><th>Name</th><th>Value</th></tr>";
+
+            for (var i in self.data.content) {
+                htmlInner += "<tr>";
+                htmlInner += ("<td class='barKey'><input type='text' value=" + self.data.content[i].key + "></input></td>");
+                htmlInner += ("<td class='barScore'><input type='text' value=" + self.data.content[i].score + "></input></td>");
+                htmlInner += "</tr>";
+            }
+
+            htmlInner += "</table>";
+            $(widgetId).append(htmlInner);
+        });
+
+        widgetInDom.find(".barName").hover(function() {
+            alert("blargl");
+        });
+
+/*            $(widgetId).find("input").blur(function() {
+                if ($(this).attr("name") == "barScore") {
+        console.log("need to update the score");
+        console.log($(this).parent().find("input"));
+
+                    updateScoreBoard(self._id, self.data.content, $(this).parent().find("input").val(), $(this).val());
+
+                } else {
+                    // Need to update the key
+                    var newValue = $(this).val();
+                    var tempArray = self.data.content;
+
+                    var key = $(this).closest('tr').children('td.barKey').text();
+
+                    for (var index in tempArray) {
+                        if (tempArray[index].key == key) {
+                            break;
+                        }
+                    }
+
+                    toSet = {};
+                    toSet['data.content.' + index + '.key'] = newValue;
+
+                    Widgets.update(self._id, { $set: toSet });
                 }
-            }
 
-            toSet = {};
-            toSet['data.content.' + index + '.key'] = newValue;
-
-            Widgets.update(self._id, { $set: toSet });
-        });
-
+        widgetInDom.find("button#addCol").unbind();
         widgetInDom.find("button#addCol").click(function(d) {
-            console.log("blargl");
             obj = {'key': "New Column", 'score': 0};
             Widgets.update(self._id, { $push: {'data.content' : obj}});
+        dblClick = false;
         });
-    }
-});
+}); */
 
 var barClickHandler = function(d, self, obj) {
-    if (self.dblClick) {
-        return;
-    }
     var oldValue = parseInt(obj.attr("value"));
     var newValue;
     if (d.shiftKey || d.altKey || d.ctrlKey) {
@@ -110,7 +138,8 @@ var drawGraph = function(self) {
     var svg = d3.select(widgetDivId)
         .append("svg")
         .attr("width", w)
-        .attr("height", h + bottomHeight);
+        .attr("height", h + bottomHeight)
+        .attr("class", "barGraph");
 
     svg.selectAll("rect")
         .data(self.data.content)
