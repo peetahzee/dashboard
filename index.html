@@ -14,14 +14,17 @@
   <header>
     <h1>{{dashboard.name}}</h1>
   </header>
+  {{#constant}}
   <div id="newWidgets"></div>
+  {{/constant}}
   <input type="button" class="add" value="Add Widget"/>
-
+  {{#isolate}}
   <div id="widgets">
     {{#each dashboard.widgets}}
       {{> widget}}
     {{/each}}
   </div>
+  {{/isolate}}
 </div>
 </template>
 

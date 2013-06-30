@@ -12,6 +12,9 @@ _.extend(StickyNote.prototype, {
     this.html += '<div class="stickyData">' + this.data.content + "</div>";
     this.html += '<textarea rows="2" cols="30" class="stickyEdit">' + this.data.content + '</textarea>';
     this.html += this.generateFooter();
+  },
+  getData: function() {
+  	this.render();
   }
 });
 

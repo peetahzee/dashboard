@@ -4,7 +4,7 @@ Dashboards = new Meteor.Collection("dashboards", {
       w = doc.widgets[i];
       doc.widgets[i] = eval("new " + w.widgetType + "(w)");
       doc.widgets[i].widgetId = i;
-      doc.widgets[i].render();
+      doc.widgets[i].getData();
     }
     return doc;
   }
@@ -24,7 +24,7 @@ Template.dashboard.events({
   'click input.add': function () {
     html = '';
     for (var i = 0; i < WidgetTypes.length; i++) {
-      html = '<input type="button" class="addWidget" value="New'+WidgetTypes[i].className+'"/>';
+      html += '<input type="button" class="addWidget" value="New'+WidgetTypes[i].className+'"/>';
     }
     document.getElementById('newWidgets').innerHTML = html;  
   },
@@ -32,7 +32,7 @@ Template.dashboard.events({
   'click input.addWidget': function (event) {
     widget = eval("new " + event.target.value + "()");
 
-    Dashboards.update(dashboard._id, {'$push': { widgets: widget, }});
+    Dashboards.update(Session.get("db")._id, {'$push': { widgets: widget, }});
   },
 
 });
@@ -52,9 +52,10 @@ Template.widget.events({
     },
 });
 
+
 Template.widget.rendered = function() {
     var idName = "#widget_" + this.data.widgetId;
-
+    console.log(this);
     $(idName).resizable({
         stop: function(event, ui) {
             widgetId = $(this).attr('id').substring(7);
