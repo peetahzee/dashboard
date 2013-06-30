@@ -65,6 +65,9 @@ h1 {
   cursor: pointer;
   transition: 0.3s opacity;
 }
+#boards button {
+  background: #777;
+}
 #boards input, #people input {
   padding: 5px 10px;
   cursor: auto;
@@ -75,6 +78,9 @@ h1 {
 }
 #boards button:hover, #boards button.active {
   opacity: 1;
+}
+#boards button.active {
+  border: 1px solid #fff;
 }
 #colors button {
   width: 30px;
@@ -140,7 +146,7 @@ h1 {
   position: absolute !important;
   transition: 0.2s opacity;
 }
-.widget .remove-widget-icon {
+.widget .remove-widget-icon, .widget .edit-widget-icon {
   font-family: "iconSweetsRegular";
   float: right;
   opacity: 0;
@@ -149,10 +155,10 @@ h1 {
   transition: 0.2s opacity, 0.2s color, 0.2s text-shadow;
   cursor: pointer;
 }
-.widget .remove-widget-icon.visible {
+.widget .remove-widget-icon.visible, .widget .edit-widget-icon.visible {
   opacity: 0.5;
 }
-.widget .remove-widget-icon:hover {
+.widget .remove-widget-icon:hover,.widget .edit-widget-icon:hover {
   color: white !important;
   text-shadow: 0px 0px 2px rgba(0,0,0,0.9);
 }
@@ -183,7 +189,7 @@ h1 {
   width: 100%;
   background: none;
 }
-.dateTime {
+.dateTime, .buildStatus {
   width: 300px;
   height: 85px;
   text-align: center;
@@ -191,14 +197,39 @@ h1 {
   color: white;
   padding: 10px;
 }
-.dateTime h2 {
+.buildStatus .content {
+  height: 100%;
+}
+.buildStatus .edit {
+  text-align: left;
+}
+.widget .edit {
+  display: none;
+}
+.widget .edit h3 {
+  font-size: 30px;
+  font-weight: normal;
+  line-height: normal;
+  margin: 0;
+  padding: 0;
+}
+.widget .edit p {
+  opacity: 0.7;
+}
+.widget .edit input {
+  font-size: 15px;
+  border: 1px solid #aaa;
+  width: 80%;
+  padding: 5px;
+}
+.dateTime h2, .buildStatus h2 {
   font-weight: 300;
   font-size: 50px;
   margin: 0;
   padding: 0;
   line-height: normal;
 }
-.dateTime .time {
+.dateTime .time, .buildStatus .status-string {
   opacity: 0.5;
 }
 .clear {
