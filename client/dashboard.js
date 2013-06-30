@@ -24,10 +24,7 @@ Template.dashboard.dashboard = function() {
 
 Template.widget.events({
     'click': function (event) {
-        console.log(event.which);
-        console.log(this.widgetType);
-        console.log(this.widgetId);
-        Dashboards.update({_id: dashboard._id}, 
+        Dashboards.update({_id: dashboard._id},
         	{ '$set': {'widgets.0.data.content': 'hello5'} }
         );
     },
@@ -43,15 +40,11 @@ Template.widget.rendered = function() {
 
     $(idName).resizable({
         stop: function(event, ui) {
-            console.log(this.attr('id').substring(7));
-            widgetId = 1;
-            toSet = {}
+            widgetId = $(this).attr('id').substring(7);
+            toSet = {};
             toSet['widgets.' + widgetId + '.height'] = ui.size.height;
             toSet['widgets.' + widgetId + '.width'] = ui.size.width;
-            Dashboards.update(Session.get("db")._id,
-                {
-                    $set: toSet
-                });
+            Dashboards.update(Session.get("db")._id, { $set: toSet });
         }
     });
 }
