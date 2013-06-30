@@ -14,9 +14,9 @@ _.extend(StickyNote.prototype, {
     this.html += this.generateFooter();
   },
 
-  save:  function(val) {
+  save:  function(widgetId, val) {
     toSet = {};
-    toSet['widgets.' + this.widgetId + '.data.content'] = val;
+    toSet['widgets.' + widgetId + '.data.content'] = val;
     if (Session.get("db")._id) {
         Dashboards.update(Session.get("db")._id, { $set: toSet });
     }

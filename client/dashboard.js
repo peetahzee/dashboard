@@ -94,9 +94,10 @@ Template.widget.rendered = function() {
 
     // Able to edit..
     $(".stickyEdit").keypress(function(e) {
-        if (e.charCode == 13) {
-            widget.data.save($(this).val());
+        widgetId = $(this).parent().attr('id').substring(7);
 
+        if (e.charCode == 13) {
+            widget.data.save(widgetId, $(this).val());
         }
     });
 }
