@@ -22,11 +22,12 @@ Template.dashboard.dashboard = function() {
 	return dashboard;
 }
 
+
 Template.widget.events({
     'click': function (event) {
-        Dashboards.update({_id: dashboard._id},
-        	{ '$set': {'widgets.0.data.content': 'hello5'} }
-        );
+        var idName = "#widget_" + this.widgetId;
+        $(idName).find("textarea").css("display", "block");
+        $(idName).find(".stickyData").css("display", "none");
     },
 
     'mouseleave': function(e) {
@@ -44,6 +45,16 @@ Template.widget.rendered = function() {
             toSet = {};
             toSet['widgets.' + widgetId + '.height'] = ui.size.height;
             toSet['widgets.' + widgetId + '.width'] = ui.size.width;
+            Dashboards.update(Session.get("db")._id, { $set: toSet });
+        }
+    });
+
+    // Able to edit..
+    $(".stickyEdit").keypress(function(e) {
+        if (e.charCode == 13) {
+            widgetId = $(this).parent().attr('id').substring(7);
+            toSet = {};
+            toSet['widgets.' + widgetId + '.data.content'] = $(this).val();
             Dashboards.update(Session.get("db")._id, { $set: toSet });
         }
     });
