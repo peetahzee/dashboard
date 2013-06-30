@@ -1,16 +1,21 @@
-StickyNotes = function(widget) {
+StickyNote = function(widget) {
   _.extend(this, widget);
 };
 
-_.extend(StickyNotes.prototype, {
+_.extend(StickyNote.prototype, WidgetType);
+
+_.extend(StickyNote.prototype, {
+  widgetTypeName: "stickyNote",
   render: function() {
-    this.html = '<div id="widget_' + this.widgetId + '" style="'+ this.data.style + '" class="widget">';
+    this.html = this.generateHeader();
     this.html += '<h2>Sticky Note</h2>';
-    this.html += this.data.content;
-    this.html += '</div>';
+    this.html += '<div class="stickyData">' + this.data.content + "</div>";
+    this.html += '<textarea rows="2" cols="30" class="stickyEdit">' + this.data.content + '</textarea>';
+    this.html += this.generateFooter();
   }
 });
 
+<<<<<<< HEAD
 NewStickyNote = function () {
 	return {
         widgetType: "StickyNotes",
@@ -21,3 +26,9 @@ NewStickyNote = function () {
           position: {x: 0, y: 0}
      };
  }
+=======
+
+wtToCreate = {typeName: 'Sticky Notes', className: "StickyNote"};
+WidgetTypes.push(wtToCreate);
+
+>>>>>>> 039a89276b3e152feb4a8b4e3670580f18657046

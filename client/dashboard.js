@@ -9,32 +9,31 @@ Dashboards = new Meteor.Collection("dashboards", {
     return doc;
   }
 });
-Widgets = new Meteor.Collection("widgets");
-WidgetTypes = new Meteor.Collection("widgetTypes");
 
 var dashboard = null;
 var widgets = null;
 
 Template.dashboard.dashboard = function() {
-	dashboard = Dashboards.findOne();
-	return dashboard;
+    dashboard = Dashboards.findOne();
+    Session.set("db", dashboard);
+    return dashboard;
 }
+
 
 Template.dashboard.events({
   'click input.add': function () {
-    html = '<input type="button" class="addWidget" value="NewStickyNote"/>';
+    var types = ['NewStickyNote'];
+    html = ''
+    for (int i = 0; i < types.length; i++) {
+      html = '<input type="button" class="addWidget" value="'+types[i]+'"/>';
+    }
     document.getElementById('newWidgets').innerHTML = html;  
   },
 
   'click input.addWidget': function (event) {
     widget = eval("new " + event.target.value + "()");
 
-    Dashboards.update(dashboard._id,
- {'$push': {
-      widgets: widget,
-      }
-    }    
-    );
+    Dashboards.update(dashboard._id, {'$push': { widgets: widget, }});
   },
 
 });
@@ -42,9 +41,10 @@ Template.dashboard.events({
 
 Template.widget.events({
     'click': function (event) {
-        console.log(event.which);
-        console.log(this.widgetType);
-        console.log(this.widgetId);
+        var idName = "#widget_" + this.widgetId;
+        $(idName).find("textarea").css("display", "block");
+        $(idName).find(".stickyData").css("display", "none");
+
     },
 
     'mouseleave': function(e) {
@@ -55,6 +55,25 @@ Template.widget.events({
 
 Template.widget.rendered = function() {
     var idName = "#widget_" + this.data.widgetId;
-    $(idName).resizable();
+
+    $(idName).resizable({
+        stop: function(event, ui) {
+            widgetId = $(this).attr('id').substring(7);
+            toSet = {};
+            toSet['widgets.' + widgetId + '.height'] = ui.size.height;
+            toSet['widgets.' + widgetId + '.width'] = ui.size.width;
+            Dashboards.update(Session.get("db")._id, { $set: toSet });
+        }
+    });
+
+    // Able to edit..
+    $(".stickyEdit").keypress(function(e) {
+        if (e.charCode == 13) {
+            widgetId = $(this).parent().attr('id').substring(7);
+            toSet = {};
+            toSet['widgets.' + widgetId + '.data.content'] = $(this).val();
+            Dashboards.update(Session.get("db")._id, { $set: toSet });
+        }
+    });
 }
 
