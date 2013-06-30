@@ -14,14 +14,12 @@ _.extend(ScoreBoard.prototype, {
     },
     getData: function() {
         var widget = this;
-        Meteor.setInterval(function() {
-            updateScoreBoard(widget._id, values);
-        }, 1000);
         this.render();
         console.log("need to do getdta function");
     },
     rendered: function() {
                   var self = this;
+                  self.setupResizeDragDelete();
 
                   if (!self.drawBarGraph) {
                       self.drawBarGraph = Meteor.autorun(function() {
@@ -119,7 +117,7 @@ function updateScoreBoard(id) {
 
 NewScoreBoard = function () {
     return {
-        widgetType: "Score Board",
+        widgetType: "ScoreBoard",
         data: {
             content: {
                          Peter: 0,
