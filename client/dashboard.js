@@ -20,11 +20,30 @@ Template.dashboard.dashboard = function() {
 }
 
 
+Template.dashboard.events({
+  'click input.add': function () {
+    html = '';
+    for (var i = 0; i < WidgetTypes.length; i++) {
+      html = '<input type="button" class="addWidget" value="New'+WidgetTypes[i].className+'"/>';
+    }
+    document.getElementById('newWidgets').innerHTML = html;  
+  },
+
+  'click input.addWidget': function (event) {
+    widget = eval("new " + event.target.value + "()");
+
+    Dashboards.update(dashboard._id, {'$push': { widgets: widget, }});
+  },
+
+});
+
+
 Template.widget.events({
     'click': function (event) {
         var idName = "#widget_" + this.widgetId;
         $(idName).find("textarea").css("display", "block");
         $(idName).find(".stickyData").css("display", "none");
+
     },
 
     'mouseleave': function(e) {

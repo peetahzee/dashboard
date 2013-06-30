@@ -1,7 +1,6 @@
 Dashboards = new Meteor.Collection("dashboards");
 
 Meteor.startup(function() {
-
   if(Dashboards.find().count() === 0) {
     Dashboards.insert({
       name: "Test Dashboard",

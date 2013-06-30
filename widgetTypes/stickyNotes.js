@@ -15,6 +15,16 @@ _.extend(StickyNote.prototype, {
   }
 });
 
+NewStickyNote = function () {
+	return {
+        widgetType: "StickyNote",
+        data: {
+            content: "New Sticky note",
+            style: "color: red;"
+          },
+          position: {x: 0, y: 0}
+     };
+ }
 
 wtToCreate = {typeName: 'Sticky Notes', className: "StickyNote"};
 WidgetTypes.push(wtToCreate);
