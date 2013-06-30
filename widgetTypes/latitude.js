@@ -8,7 +8,6 @@ _.extend(Latitude.prototype, {
   widgetTypeName: "stickyNote",
   render: function() {
     this.html = this.generateHeader();
-    this.html += '<h2>Latitude</h2>';
     this.html += '<div id="map-canvas"></div>';
     this.html += '<input type="button" class="authButton" value="Auth"/>';
 
@@ -27,18 +26,19 @@ _.extend(Latitude.prototype, {
   rendered: function() {
     console.log("fjksla;dfas");
     this.initMap();
+    if(this.locations.length > 0) {
      for (var i = 0; i < this.locations.length; i++) {
 
       wp = new google.maps.LatLng(this.locations[i].lat, this.locations[i].long);
       marker = new google.maps.Marker({position: wp, map: this.map});
      }
+    }
     widget = this;
     $(".authButton").click(function() {
       console.log("ID: " + widget._id);
         auth(widget._id);
     });
     this.setupResizeDragDelete();
-
   },
 
   initMap: function() {
@@ -78,6 +78,7 @@ function auth(id) {
           curloc['userId'] = Meteor.userId();
           console.log(curloc);
           console.log(id);
+
            Widgets.update(id, {$push: {locations: curloc}});
             console.log(loc);
             console.log(loc.latitude);

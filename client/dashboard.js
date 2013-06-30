@@ -10,6 +10,12 @@ Widgets = new Meteor.Collection("widgets", {
     }
 });
 
+Meteor.startup(function() {
+  Accounts.ui.config({
+    passwordSignupFields: 'USERNAME_AND_EMAIL',
+  });
+});
+
 var dashboard = null;
 var widgets = null;
 
@@ -70,8 +76,10 @@ Template.dashboard.events({
     if( $("#boards").is(':visible')) {
       $("#boards").slideUp();
     } else {
-      $('#boards button').removeClass('active');
-      $("button[value=" + Session.get("db")._id+"]").addClass('active');
+      if(Session.get('db') != undefined) {
+        $('#boards button').removeClass('active');
+        $("button[value=" + Session.get("db")._id+"]").addClass('active');
+      }
       $("#boards").slideDown();
     }
   },
@@ -114,6 +122,14 @@ Template.dashboard.events({
 Template.widget.widget = function () {
   widget =  Widgets.findOne({_id: this.toString()});
   return widget;
+}
+
+Template.widget.created = function() {
+  Widgets.find({_id: this.data}).observe(
+    {added: function(doc) {
+      doc.created();
+    }}
+  );
 }
 
 Template.widget.rendered = function() {
