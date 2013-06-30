@@ -14,9 +14,9 @@ var dashboard = null;
 var widgets = null;
 
 Template.dashboard.dashboard = function() {
-    dashboard = Dashboards.findOne();
-    Session.set("db", dashboard);
-    return dashboard;
+  dashboard = Dashboards.findOne();
+  Session.set("db", dashboard);
+  return dashboard;
 }
 
 
@@ -41,63 +41,55 @@ Template.dashboard.events({
 
 
 Template.widget.events({
-    'click': function (event) {
-        var idName = "#widget_" + this.widgetId;
-        // Want to toggle based on when clicking
-        if ($(idName).find(".stickyData").css("display") === "block") {
-            $(idName).find(".stickyData").css("display", "none");
-            $(idName).find("textarea").css("display", "block");
-            height = $(idName).innerHeight() - $(idName).find("h2").height() - 65;
-            $(idName).find("textarea").css("height", height);
-
-            // Make div not resizable
-            $(idName).resizable( "destroy" )
-        } else if (!($("input,textarea").is(":focus"))) {
-            $(idName).find(".stickyData").css("display", "block");
-            $(idName).find("textarea").css("display", "none");
-
-            $(idName).resizable({
-                stop: function(event, ui) {
-                          widgetId = $(this).attr('id').substring(7);
-                          toSet = {};
-                          toSet['widgets.' + widgetId + '.height'] = ui.size.height;
-                          toSet['widgets.' + widgetId + '.width'] = ui.size.width;
-                          Dashboards.update(Session.get("db")._id, { $set: toSet });
-                      }
-            });
-
-        }
-    },
-
-    'mouseleave': function(e) {
-        e.srcElement.style.opacity = "1";
-        e.srcElement.style.border = "";
-    },
 });
 
 Template.widget.rendered = function() {
-    var idName = "#widget_" + this.data.widgetId;
-    var widget = this;
+  var idName = "#widget_" + this.data.widgetId;
+  var widget = this;
+  $(idName).find('.stickyData').click(function() {
+    // Want to toggle based on when clicking
+    if ($(idName).find(".stickyData").css("display") === "block") {
+      $(idName).find(".stickyData").css("display", "none");
+      $(idName).find("textarea").css("display", "block");
+      height = $(idName).innerHeight() - $(idName).find("h2").height() - 65;
+      $(idName).find("textarea").css("height", height);
 
-    $(idName).resizable({
-        stop: function(event, ui) {
-            widgetId = $(this).attr('id').substring(7);
-            toSet = {};
-            toSet['widgets.' + widgetId + '.height'] = ui.size.height;
-            toSet['widgets.' + widgetId + '.width'] = ui.size.width;
-            Dashboards.update(Session.get("db")._id, { $set: toSet });
-        }
-    });
+      $(idName).find("textarea").focus();
+      // Make div not resizable
+      $(idName).resizable('disable');
+    } else if (!($("input,textarea").is(":focus"))) {
+      $(idName).find(".stickyData").css("display", "block");
+      $(idName).find("textarea").css("display", "none");
 
-    $(".stickyEdit").unbind("keypress");
-    $(".stickyEdit").unbind("blur");
+      $(idName).resizable('enable');
+    }
+  });
 
-    // Able to edit..
-    $(".stickyEdit").keypress(function(e) {
-        if (e.charCode == 13) {
-            widget.data.save($(this).val());
+  $(idName).resizable({
+    stop: function(event, ui) {
+      widgetId = $(this).attr('id').substring(7);
+      toSet = {};
+      toSet['widgets.' + widgetId + '.height'] = ui.size.height;
+      toSet['widgets.' + widgetId + '.width'] = ui.size.width;
+      Dashboards.update(Session.get("db")._id, { $set: toSet });
+    }
+  }).draggable({
+    stop: function(event, ui) {
+      widgetId = $(this).attr('id').substring(7);
+      toSet = {};
+      toSet['widgets.' + widgetId + '.position.x'] = ui.position.left;
+      toSet['widgets.' + widgetId + '.position.y'] = ui.position.top;
+      Dashboards.update(Session.get('db')._id, { $set: toSet});
+    }
+  });
 
-        }
-    });
+  $(idName).find(".stickyEdit").unbind("keypress");
+
+  // Able to edit..
+  $(idName).find(".stickyEdit").keypress(function(e) {
+    if (e.charCode == 13) {
+      widget.data.save($(this).val());
+    }
+  });
 }
 
