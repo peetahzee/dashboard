@@ -27,11 +27,13 @@ _.extend(Latitude.prototype, {
   rendered: function() {
     console.log("fjksla;dfas");
     this.initMap();
+    if(this.locations.length > 0) {
      for (var i = 0; i < this.locations.length; i++) {
 
       wp = new google.maps.LatLng(this.locations[i].lat, this.locations[i].long);
       marker = new google.maps.Marker({position: wp, map: this.map});
      }
+    }
     widget = this;
     $(".authButton").click(function() {
       console.log("ID: " + widget._id);
@@ -76,6 +78,7 @@ function auth(id) {
           curloc['userId'] = Meteor.userId();
           console.log(curloc);
           console.log(id);
+
            Widgets.update(id, {$push: {locations: curloc}});
             console.log(loc);
             console.log(loc.latitude);
