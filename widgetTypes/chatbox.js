@@ -21,8 +21,8 @@ _.extend(Chatbox.prototype, {
   },
   rendered: function() {
 
-    widget = this;
-    widgetInDom = this.widgetInDom();
+    var widget = this;
+    var widgetInDom = this.widgetInDom();
     widgetInDom.find('.chatbox').unbind();
     widgetInDom.find('.chatbox').submit(function() {
       value = $(widgetInDom).find("input[name=content]").val();
@@ -36,6 +36,7 @@ _.extend(Chatbox.prototype, {
       }
       newMessage['content'] = value;
       console.log(newMessage);
+      console.log(widgetInDom);
       Widgets.update(widget._id, {$push: {messages: newMessage}});
       return false;
       });
