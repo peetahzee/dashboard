@@ -26,6 +26,8 @@ _.extend(ScoreBoard.prototype, {
             });
         }
 
+        self.dblClick = false;
+
         var widgetInDom = this.widgetInDom();
         widgetInDom.unbind();
 
@@ -41,6 +43,27 @@ _.extend(ScoreBoard.prototype, {
             }
         });
 
+        widgetInDom.find(".barName").dblclick(function (d) {
+            self.dblClick = true;
+            var newValue = window.prompt("Please insert new name:");
+            if (newValue == null) {
+                return;
+            }
+            var tempArray = self.data.content;
+            var key = $(this).attr("key");
+
+            for (var index in tempArray) {
+                if (tempArray[index].key == key) {
+                    break;
+                }
+            }
+
+            toSet = {};
+            toSet['data.content.' + index + '.key'] = newValue;
+
+            Widgets.update(self._id, { $set: toSet });
+        });
+
         widgetInDom.find("button#addCol").click(function(d) {
             console.log("blargl");
             obj = {'key': "New Column", 'score': 0};
@@ -50,6 +73,9 @@ _.extend(ScoreBoard.prototype, {
 });
 
 var barClickHandler = function(d, self, obj) {
+    if (self.dblClick) {
+        return;
+    }
     var oldValue = parseInt(obj.attr("value"));
     var newValue;
     if (d.shiftKey || d.altKey || d.ctrlKey) {
@@ -150,8 +176,6 @@ var drawGraph = function(self) {
 
 
 updateScoreBoard = function(id, tempArray, key, newValue) {
-    var newObj = {'key': key, 'score': newValue};
-
     // Find the index of the key/score pairing.
     for (var index in tempArray) {
         if (tempArray[index].key == key) {
