@@ -10,22 +10,31 @@
 {{> dashboard}}
 </body>
 
+
+
 <template name="dashboard">
 <div class="dashboard">
   <header>
     <h1>{{dashboard.name}}</h1>
+     {{#each boards}}
+     	<button class="dashboard" value="{{this._id}}">{{this.name}}</button>
+     {{/each}}
+    <div id="newDashboards">
+      <button id="addDashboard" class="add">+Dashboard</button>
+    </div>
     <div id="newWidgets">
       <button id="addWidgetButton" class="add">+</button>
     </div>
+	<div>
+	  {{loginButtons}}
+	</div>
     <div class="clear"></div>
   </header>
-  {{#isolate}}
   <div id="widgets">
     {{#each dashboard.widgets}}
       {{> widget}}
     {{/each}}
   </div>
-  {{/isolate}}
 </div>
 </template>
 

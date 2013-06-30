@@ -19,6 +19,12 @@ Meteor.startup(function() {
     Dashboards.insert({
       name: "Test Dashboard",
       widgets: [id],
+      users: [],
+    });
+     Dashboards.insert({
+      name: "Test Dashboard2",
+      widgets: [id],
+      users: [],
     });
   }
 });

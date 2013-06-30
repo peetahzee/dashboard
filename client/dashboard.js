@@ -14,11 +14,19 @@ var dashboard = null;
 var widgets = null;
 
 Template.dashboard.dashboard = function() {
-  dashboard = Dashboards.findOne();
+  Session.get("new_widget");
+  if (Session.get('db')) {
+    dashboard = Dashboards.findOne({_id : Session.get('db')._id});
+    return dashboard;
+  }
+  dashboard = Dashboards.findOne({users: this.userId});
   Session.set("db", dashboard);
   return dashboard;
 }
 
+Template.dashboard.boards = function() {
+  return Dashboards.find({users : this.userId});
+}
 
 Template.dashboard.events({
   'click button#addWidgetButton': function () {
@@ -38,17 +46,32 @@ Template.dashboard.events({
 
     id = Widgets.insert(widget);
     Dashboards.update(Session.get("db")._id, {$push: {widgets: id}});
+    dashboard = Session.get("db");
+    Session.set("new_widget", id);
+  },
+
+  'click button.dashboard': function(event) {
+    dashboard = Dashboards.findOne({_id: event.target.value});
+    Session.set("db", dashboard);
+  },
+
+
+  'click button#addDashboard': function (event) {
+    Dashboards.insert({
+      name: "Test Dashboard2",
+      users: [this.userId],
+    });
   },
 
 });
 
 Template.widget.widget = function () {
+  console.log("by");
   widget =  Widgets.findOne({_id: this.toString()});
   return widget;
 }
 
 Template.widget.rendered = function() {
-
   var idName = "#widget_" + this.data;
   var widget = Widgets.findOne({_id: this.data});
   $(idName).find('.stickyData').click(function() {
