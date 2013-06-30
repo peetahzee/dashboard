@@ -10,3 +10,14 @@ _.extend(StickyNotes.prototype, {
     this.html += '</div>';
   }
 });
+
+NewStickyNote = function () {
+	return {
+        widgetType: "StickyNotes",
+        data: {
+            content: "New Sticky note",
+            style: "color: red;"
+          },
+          position: {x: 0, y: 0}
+     };
+ }

@@ -21,20 +21,21 @@ Template.dashboard.dashboard = function() {
 }
 
 Template.dashboard.events({
-	'click input.add': function () {
+  'click input.add': function () {
+    html = '<input type="button" class="addWidget" value="NewStickyNote"/>';
+    document.getElementById('newWidgets').innerHTML = html;  
+  },
+
+  'click input.addWidget': function (event) {
+    widget = eval("new " + event.target.value + "()");
+
     Dashboards.update(dashboard._id,
-    {'$push': {
-    	widgets: {
-    		widgetType: "StickyNotes",
-        	data: {
-          	content: "New Sticky note",
-        		style: "color: red;"
-      		},
-        	position: {x: 0, y: 0}
-      	},
-    	}
-    });
-  }
+ {'$push': {
+      widgets: widget,
+      }
+    }    
+    );
+  },
 
 });
 
