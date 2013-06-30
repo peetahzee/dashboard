@@ -20,15 +20,30 @@ Template.dashboard.dashboard = function() {
 	return dashboard;
 }
 
+Template.dashboard.events({
+	'click input.add': function () {
+    Dashboards.update(dashboard._id,
+    {'$push': {
+    	widgets: {
+    		widgetType: "StickyNotes",
+        	data: {
+          	content: "New Sticky note",
+        		style: "color: red;"
+      		},
+        	position: {x: 0, y: 0}
+      	},
+    	}
+    });
+  }
+
+});
+
 
 Template.widget.events({
     'click': function (event) {
         console.log(event.which);
         console.log(this.widgetType);
         console.log(this.widgetId);
-        Dashboards.update({_id: dashboard._id}, 
-        	{ '$set': {'widgets.0.data.content': 'hello5'} }
-        );
     },
 
     'mouseleave': function(e) {
