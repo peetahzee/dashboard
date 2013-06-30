@@ -10,6 +10,12 @@ Widgets = new Meteor.Collection("widgets", {
     }
 });
 
+Meteor.startup(function() {
+  Accounts.ui.config({
+    passwordSignupFields: 'USERNAME_AND_EMAIL',
+  });
+});
+
 var dashboard = null;
 var widgets = null;
 

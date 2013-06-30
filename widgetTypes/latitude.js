@@ -26,11 +26,34 @@ _.extend(Latitude.prototype, {
   rendered: function() {
     console.log("fjksla;dfas");
     this.initMap();
+    var infoWindow = new google.maps.InfoWindow();
+
     if(this.locations != undefined) {
      for (var i = 0; i < this.locations.length; i++) {
 
       wp = new google.maps.LatLng(this.locations[i].lat, this.locations[i].long);
       marker = new google.maps.Marker({position: wp, map: this.map});
+      var location = this.locations[i];
+      google.maps.event.addListener(marker, 'click', function() {
+        console.log("click");
+        this.map.setCenter(marker.getPosition());
+        user = Meteor.users.findOne({_id: location.userId});
+        if (user) {
+          var content = "<div>" + user.username + "</div>"; 
+          var geocoder = new google.maps.Geocoder();
+          geocoder.geocode({
+            "latLng": wp
+          }, function (results, status) {
+            console.log(wp);
+            console.log(results[0].formatted_address);
+            console.log(status);
+            var placeName = results[0].formatted_address;
+            content += "<div>" + placeName + "</div>";
+            infoWindow.setContent(content);
+          });
+          infoWindow.open(this.map, marker);
+        }
+      });
      }
     }
     widget = this;
@@ -93,8 +116,8 @@ NewLatitude = function () {
     widgetType: "Latitude",
     data: {
       content: "New Sticky note",
-      locations: [],
     },
+    locations: [],
     position: {x: 0, y: 0}
   };
 };
