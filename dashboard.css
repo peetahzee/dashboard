@@ -65,6 +65,9 @@ h1 {
   cursor: pointer;
   transition: 0.3s opacity;
 }
+#boards button {
+  background: #777;
+}
 #boards input, #people input {
   padding: 5px 10px;
   cursor: auto;
