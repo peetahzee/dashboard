@@ -4,6 +4,30 @@
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/themes/base/jquery-ui.css"/>
     <title>Dashboard</title>
+    <script src="https://apis.google.com/js/client.js"></script>
+    <script>
+      function auth() {
+      	  var apiKey = 'AIzaSyCuT1vpGKW_urUMZiEHjAxEJInWFCJQTSM';
+
+        var config = {
+      'client_id': '459813210522',
+          'scope': 'https://www.googleapis.com/auth/latitude.current.best'
+        };
+        gapi.auth.authorize(config, function() {
+          console.log('login complete');
+          console.log(gapi.auth.getToken());
+          gapi.client.load('latitude', 'v1', function () {
+        	console.log("load");
+        	var request = gapi.client.latitude.currentLocation.get({"granularity": "city"});
+        	request.execute(function (loc) {
+        		console.log(loc);
+        		console.log(loc.latitude);
+        	});
+        });
+        });
+
+      }
+    </script>
 </head>
 
 <body>
@@ -31,6 +55,8 @@
     <div id="newWidgets">
       <button id="addWidgetButton" class="add">+</button>
     </div>
+    <button onclick="auth();">Authorize</button>
+
 	<div>
 	  {{loginButtons}}
 	</div>
