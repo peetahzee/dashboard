@@ -37,6 +37,8 @@ _.extend(Latitude.prototype, {
       console.log("ID: " + widget._id);
         auth(widget._id);
     });
+    this.setupResizeDragDelete();
+
   },
 
   initMap: function() {

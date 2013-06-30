@@ -3,6 +3,9 @@ Widgets = new Meteor.Collection("widgets");
 Invites = new Meteor.Collection("invites");
 
 Meteor.startup(function() {
+  Accounts.ui.config({
+  	passwordSignupFields: 'USERNAME_AND_EMAIL',
+  });
   if(Widgets.find().count() === 0) {
   	var id = Widgets.insert({
   		widgetType: "StickyNote",
