@@ -17,18 +17,12 @@ _.extend(StickyNote.prototype, {
   	this.render();
   },
   save: function(val) {
-    toSet = {};
-    toSet['data.content'] = val;
-    if (this._id) {
-        Widgets.update(this._id, { $set: toSet });
-    }
+    Widgets.update(this._id, { $set: {'data.content': val} });
   },
   rendered: function() {
     var widget = this; // for context
     var widgetInDom = this.widgetInDom();
-
-    var height = this.widgetInDom().innerHeight() - this.widgetInDom().find("h2").height() - 65;
-    widgetInDom.find("textarea").css("height", height);
+    widgetInDom.unbind();
     
     widgetInDom.find('.stickyData').click(function() {
       // Want to toggle based on when clicking
@@ -36,6 +30,9 @@ _.extend(StickyNote.prototype, {
         widgetInDom.find(".stickyData").css("display", "none");
         widgetInDom.find("textarea").css("display", "block");
         widgetInDom.find("textarea").focus();
+
+        var height = widgetInDom.innerHeight() - widgetInDom.find("h2").height() - 65;
+        widgetInDom.find("textarea").css("height", height);
 
         widgetInDom.resizable('disable');
       } else if (!($("input,textarea").is(":focus"))) {
@@ -46,15 +43,13 @@ _.extend(StickyNote.prototype, {
       }
     });
 
-    this.setupResizeDrag();
-
-    // Able to edit..
-    widgetInDom.find(".stickyEdit").unbind("keypress");
     widgetInDom.find(".stickyEdit").keypress(function(e) {
       if (e.charCode == 13) {
         widget.save($(this).val());
       }
     });
+
+    this.setupResizeDragDelete();
   },
   clicked: function() {
 
