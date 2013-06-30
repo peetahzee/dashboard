@@ -19,16 +19,20 @@
     </div>
     <div class="clear"></div>
   </header>
-
+  {{#isolate}}
   <div id="widgets">
     {{#each dashboard.widgets}}
       {{> widget}}
     {{/each}}
   </div>
+  {{/isolate}}
 </div>
 </template>
 
 <template name="widget">
-  {{{html}}}
+  {{{widget.html}}}
 </template>
+
+
+
 
