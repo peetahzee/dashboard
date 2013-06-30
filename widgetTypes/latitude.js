@@ -9,8 +9,11 @@ _.extend(Latitude.prototype, {
   render: function() {
     this.html = this.generateHeader();
     this.html += '<h2>Latitude</h2>';
-    this.html += '<div> Latitude: ' + this.data.lat + '</div>';
-    this.html += '<div> Longitude: ' + this.data.long + '</div>';
+    for (var i = 0; i < this.locations.length; i++) {
+      console.log('loc'+ this.locations[0].lat);
+      this.html += '<div> Latitude: ' + this.locations[i].lat + '</div>';
+      this.html += '<div> Longitude: ' + this.locations[i].long + '</div>';
+    }
     this.html += '<input type="button" class="authButton" value="Auth"/>'
 
     this.html += this.generateFooter();
@@ -27,9 +30,10 @@ _.extend(Latitude.prototype, {
   },
   rendered: function() {
     console.log("fjksla;dfas");
+    widget = this;
     $(".authButton").click(function() {
-      console.log("HI");
-        auth(this._id);
+      console.log("ID: " + widget._id);
+        auth(widget._id);
     });
   }
      
@@ -49,11 +53,14 @@ function auth(id) {
           console.log("load");
           var request = gapi.client.latitude.currentLocation.get({"granularity": "city"});
           request.execute(function (loc) {
-          location = {};
-          location['lat'] = loc.latitude;
-          location['long'] = loc.longitude;
-          location['userId'] = Meteor.userId();
-           Widgets.update(id, {$push: {locations: location}});
+          curloc = {};
+
+          curloc['lat'] = loc.latitude;
+          curloc['long'] = loc.longitude;
+          curloc['userId'] = Meteor.userId();
+          console.log(curloc);
+          console.log(id);
+           Widgets.update(id, {$push: {locations: curloc}});
             console.log(loc);
             console.log(loc.latitude);
           });

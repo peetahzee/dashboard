@@ -20,6 +20,9 @@ Template.dashboard.dashboard = function() {
     return dashboard;
   }
   dashboard = Dashboards.findOne({users: Meteor.userId()});
+  if (!dashboard) {
+    dashboard = Dashboards.findOne();
+  }
   Session.set("db", dashboard);
   return dashboard;
 }
