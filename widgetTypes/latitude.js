@@ -39,7 +39,7 @@ _.extend(Latitude.prototype, {
         this.map.setCenter(marker.getPosition());
         user = Meteor.users.findOne({_id: location.userId});
         if (user) {
-          var content = "<div>" + user.username + "</div>"; 
+          var content = "<div><b>" + user.username + "</b></div></br>"; 
           var geocoder = new google.maps.Geocoder();
           geocoder.geocode({
             "latLng": wp
@@ -73,6 +73,10 @@ _.extend(Latitude.prototype, {
     mapTypeId: google.maps.MapTypeId.ROADMAP
   };
   this.map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+  google.maps.event.addListener(this.map, 'click', function(event) {
+    console.log("map clicked!");
+    return false;
+  });
   console.log("endMap");
 }
      
@@ -118,7 +122,9 @@ NewLatitude = function () {
       content: "New Sticky note",
     },
     locations: [],
-    position: {x: 0, y: 0}
+    position: {x: 0, y: 0},
+    height: 350,
+    width: 350,
   };
 };
 
