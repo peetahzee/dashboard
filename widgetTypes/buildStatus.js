@@ -21,7 +21,6 @@ _.extend(BuildStatus.prototype, {
       html += '<div class="status-string">with link ' + this.data.link + '</div>';  
       html += '</div>';
     } else if (this.statuses != undefined) {
-      console.log('success');
       for (var i in this.statuses) {
         html += '<div class="status" style="height: ' + 100 / this.statuses.length + '%; background: #' + statusColors[this.statuses[i].status] + ';">';
         html += '<h2>' + this.statuses[i].project + '</h2>';
@@ -44,7 +43,6 @@ _.extend(BuildStatus.prototype, {
       widget.statuses = data;
       widget.forceRerender();
     }).fail(function(data) {
-      console.log('fail from here1');
       widget.statuses = "failed";
       widget.forceRerender();
     });

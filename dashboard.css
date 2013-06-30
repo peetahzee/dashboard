@@ -189,7 +189,7 @@ h1 {
   width: 100%;
   background: none;
 }
-.dateTime, .buildStatus {
+.dateTime, .buildStatus, .iframe {
   width: 300px;
   height: 85px;
   text-align: center;
@@ -197,11 +197,16 @@ h1 {
   color: white;
   padding: 10px;
 }
-.buildStatus .content {
+.buildStatus .content, .iframe .content {
   height: 100%;
 }
 .buildStatus .edit {
   text-align: left;
+}
+.iframe iframe{
+  height: 99%;
+  width: 99%;
+  border: none;
 }
 .widget .edit {
   display: none;
