@@ -119,6 +119,9 @@ Template.dashboard.events({
   },
 });
 
+
+Template.widget.preserve(['div.widget', 'iframe']);
+
 Template.widget.widget = function () {
   widget =  Widgets.findOne({_id: this.toString()});
   return widget;

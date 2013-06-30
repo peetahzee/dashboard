@@ -122,6 +122,20 @@ h1 {
   border: 1px solid #555;
   cursor: pointer;
 }
+
+.authButton {
+  border: none;
+  background: #ccc;
+  font-size: 10px;
+  line-height: 10px;
+  margin-left: 5px;
+  box-shadow: 0px 0px 15px rgba(0,0,0,0.7);
+  border-radius: 2px;
+  transition: 0.2s all;
+  border: 1px solid #555;
+  cursor: pointer;
+}
+
 #newWidgets button:hover {
   opacity: 0.6;
 }
@@ -189,7 +203,7 @@ h1 {
   width: 100%;
   background: none;
 }
-.dateTime, .buildStatus {
+.dateTime, .buildStatus, .iframe {
   width: 300px;
   height: 85px;
   text-align: center;
@@ -197,11 +211,16 @@ h1 {
   color: white;
   padding: 10px;
 }
-.buildStatus .content {
+.buildStatus .content, .iframe .content {
   height: 100%;
 }
 .buildStatus .edit {
   text-align: left;
+}
+.iframe iframe{
+  height: 99%;
+  width: 99%;
+  border: none;
 }
 .widget .edit {
   display: none;
