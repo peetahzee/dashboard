@@ -38,20 +38,36 @@ _.extend(ScoreBoard.prototype, {
     if (!self.drawTimeline) {
         self.drawTimeline = Meteor.autorun(function() {
 
-            var subtitles = Subtitles.find().fetch();
+            var dataset = [ 5, 10, 13, 19, 21, 25, 22, 18, 15, 13,
+                11, 12, 15, 20, 18, 17, 16, 18, 23, 25 ];
 
-            self.captions = d3.select(self.node)
+            self.barGraph = d3.select(".widget")
+                .selectAll("div")
+                .data(dataset)
+                .enter()
+                .append("div")
+                .attr("class", "bar")
+                .style("height", function(d) {
+                    var barHeight = d * 5;
+                    return barHeight + "px";
+                });
+
+            /* self.captions = d3.select(self.node)
             .select('.caption-spans')
             .selectAll('rect')
             .data(subtitles, function (sub) {
                 return sub._id;
             });
-            drawTimeline();
+            drawTimeline(); */
         });
     }
   }
 });
 
+var drawBarGraph = function() {
+
+    console.log("drawing bar graph now?");
+}
 
 var drawTimeline = function() {
 
