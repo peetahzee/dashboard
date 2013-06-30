@@ -76,6 +76,9 @@ h1 {
 #boards button:hover, #boards button.active {
   opacity: 1;
 }
+#boards button.active {
+  border: 1px solid #fff;
+}
 #colors button {
   width: 30px;
   height: 30px;
@@ -183,7 +186,7 @@ h1 {
   width: 100%;
   background: none;
 }
-.dateTime {
+.dateTime, .buildStatus {
   width: 300px;
   height: 85px;
   text-align: center;
@@ -191,14 +194,17 @@ h1 {
   color: white;
   padding: 10px;
 }
-.dateTime h2 {
+.buildStatus .content {
+  height: 100%;
+}
+.dateTime h2, .buildStatus h2 {
   font-weight: 300;
   font-size: 50px;
   margin: 0;
   padding: 0;
   line-height: normal;
 }
-.dateTime .time {
+.dateTime .time, .buildStatus .status-string {
   opacity: 0.5;
 }
 .clear {

@@ -11,9 +11,6 @@ _.extend(DateTime.prototype, {
     this.html += '<h2>'+ this.data.time + '</h2>';
     this.html += '<div class="time">'+this.data.date+'</div>';
     this.html += this.generateFooter();
-  },
-  updateDate: function() {
-    
   }
 });
 
