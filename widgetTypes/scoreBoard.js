@@ -23,6 +23,8 @@ _.extend(ScoreBoard.prototype, {
     rendered: function() {
                   var self = this;
 
+
+
                   if (!self.drawBarGraph) {
                       self.drawBarGraph = Meteor.autorun(function() {
                           //Width and height
