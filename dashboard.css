@@ -71,7 +71,7 @@ h1 {
   height: 200px;
   display: inline-block;
   margin: 10px 10px 0 0;
-  position: absolute;
+  position: absolute !important;
 }
 .widget.ui-state-disabled {
   opacity: 1 !important;

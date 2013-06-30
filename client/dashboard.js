@@ -39,10 +39,6 @@ Template.dashboard.events({
 
 });
 
-
-Template.widget.events({
-});
-
 Template.widget.rendered = function() {
   var idName = "#widget_" + this.data.widgetId;
   var widget = this;
@@ -92,4 +88,3 @@ Template.widget.rendered = function() {
     }
   });
 }
-
