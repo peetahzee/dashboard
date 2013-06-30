@@ -15,19 +15,25 @@ _.extend(StickyNote.prototype, {
   },
   getData: function() {
   	this.render();
+  },
+  save:  function(val) {
+    toSet = {};
+    toSet['data.content'] = val;
+    if (this._id) {
+        Widgets.update(this._id, { $set: toSet });
+    }
   }
 });
 
 NewStickyNote = function () {
-	return {
-        widgetType: "StickyNote",
-        data: {
-            content: "New Sticky note",
-            style: "color: red;"
-          },
-          position: {x: 0, y: 0}
-     };
- }
+  return {
+    widgetType: "StickyNote",
+    data: {
+      content: "New Sticky note"
+    },
+    position: {x: 0, y: 0}
+  };
+};
 
 wtToCreate = {typeName: 'Sticky Notes', className: "StickyNote"};
 WidgetTypes.push(wtToCreate);
