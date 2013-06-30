@@ -1,6 +1,7 @@
 <head>
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/themes/base/jquery-ui.css"/>
     <title>Dashboard</title>
 </head>
@@ -13,9 +14,11 @@
 <div class="dashboard">
   <header>
     <h1>{{dashboard.name}}</h1>
+    <div id="newWidgets">
+      <button id="addWidgetButton" class="add">+</button>
+    </div>
+    <div class="clear"></div>
   </header>
-  <div id="newWidgets"></div>
-  <input type="button" class="add" value="Add Widget"/>
 
   <div id="widgets">
     {{#each dashboard.widgets}}

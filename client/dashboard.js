@@ -21,17 +21,19 @@ Template.dashboard.dashboard = function() {
 
 
 Template.dashboard.events({
-  'click input.add': function () {
+  'click button#addWidgetButton': function () {
     html = '';
     for (var i = 0; i < WidgetTypes.length; i++) {
-      html = '<input type="button" class="addWidget" value="New'+WidgetTypes[i].className+'"/>';
+      html += '<button class="addWidget" value="New'+WidgetTypes[i].className+'">C</button>';
     }
-    document.getElementById('newWidgets').innerHTML = html;  
+    $('#newWidgets').fadeOut(200, function() {
+      $('#newWidgets').html(html);
+      $("#newWidgets").fadeIn(200);
+    });
   },
 
-  'click input.addWidget': function (event) {
+  'click button.addWidget': function (event) {
     widget = eval("new " + event.target.value + "()");
-
     Dashboards.update(dashboard._id, {'$push': { widgets: widget, }});
   },
 
@@ -43,7 +45,6 @@ Template.widget.events({
         var idName = "#widget_" + this.widgetId;
         $(idName).find("textarea").css("display", "block");
         $(idName).find(".stickyData").css("display", "none");
-
     },
 
     'mouseleave': function(e) {
