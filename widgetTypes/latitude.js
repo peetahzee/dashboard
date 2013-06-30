@@ -27,6 +27,7 @@ _.extend(Latitude.prototype, {
     console.log("fjksla;dfas");
     this.initMap();
     var infoWindow = new google.maps.InfoWindow();
+
     if(this.locations != undefined) {
      for (var i = 0; i < this.locations.length; i++) {
 

@@ -15,18 +15,19 @@ _.extend(BuildStatus.prototype, {
     }
 
     var html = "";
-    if(this.statuses != undefined) {
+    if(this.statuses == "failed") {
+      html += '<div class="status" style="height: 100%; background: #' + statusColors.fetchFailed + ';">';
+      html += '<h2>error retrieving json</h2>';
+      html += '<div class="status-string">with link ' + this.data.link + '</div>';  
+      html += '</div>';
+    } else if (this.statuses != undefined) {
+      console.log('success');
       for (var i in this.statuses) {
         html += '<div class="status" style="height: ' + 100 / this.statuses.length + '%; background: #' + statusColors[this.statuses[i].status] + ';">';
         html += '<h2>' + this.statuses[i].project + '</h2>';
         html += '<div class="status-string">' + this.statuses[i].status + '</div>';  
         html += '</div>';
       }
-    } else {
-      html += '<div class="status" style="height: 100%; background: #' + statusColors.fetchFailed + ';">';
-      html += '<h2>error retrieving json</h2>';
-      html += '<div class="status-string">with link ' + this.data.link + '</div>';  
-      html += '</div>';
     }
     return html;
   },
@@ -38,22 +39,22 @@ _.extend(BuildStatus.prototype, {
     return html;
   },
   getData: function() {
-
     var widget = this;
-    $.getJSON(widget.data.link).done(function(data) { 
+    $.getJSON(this.data.link).done(function(data) { 
       widget.statuses = data;
       widget.forceRerender();
     }).fail(function(data) {
+      console.log('fail from here1');
       widget.statuses = "failed";
+      widget.forceRerender();
     });
     this.render();
   },
   created: function() {
     var widget = this;
-    Meteor.setInterval(function() {
+    this.interval = Meteor.setInterval(function() {
       widget.getData();
     }, 5000);
-    this.render();
   },
   rendered: function() {
     this.setupResizeDragDelete();
@@ -70,6 +71,8 @@ _.extend(BuildStatus.prototype, {
         Widgets.update(widget._id, {$set: {'data.link': val}});
         widget.getData();
         widget.widgetInDom().find('.content').slideDown();
+        Meteor.clearInterval(widget.interval);
+        widget.created();
       });
 
       return false;
