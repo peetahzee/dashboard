@@ -1,12 +1,24 @@
+@font-face {
+  font-family: 'iconSweetsRegular';
+  src: url('iconsweets-webfont.eot');
+  src: url('iconsweets-webfont.eot?#iefix') format('embedded-opentype'),
+  url('iconsweets-webfont.woff') format('woff'),
+  url('iconsweets-webfont.ttf') format('truetype'),
+  url('iconsweets-webfont.svg#iconSweetsRegular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
 body, html {
   font-family: "Helvetica Neue";
   margin: 0;
   padding: 0;
   height: 100%;
+  box-sizing: margin-box;
+  overflow: hidden;
 }
 header {
   width: 100%;
-  padding: 20px;
   background: #777;
   box-shadow: 0px 0px 20px rgba(0,0,0,0.8);
 }
@@ -15,27 +27,203 @@ h1 {
   text-shadow: 2px 2px 8px rgba(0,0,0,0.9);
   margin: 0;
   padding: 0;
+  width: auto;
+  display: inline-block;
+  float: left;
+}
+#boards, #people, #settings {
+  background: rgba(0,0,0,0.4);
+  padding: 10px 20px;
+  display: none;
+  border-bottom: 1px solid #333;
+}
+#actualHeader {
+  padding: 20px;
+}
+
+#boards form, #people form {
+  display: inline-block;
+  float: right;
+}
+#boards button, #boards input, #people input, #colors button {
+  display: inline-block;
+  width :auto;
+  background-color: #d7e5f5;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #d7e5f5), color-stop(100%, #cbe0f5));
+  background-image: -webkit-linear-gradient(top, #d7e5f5, #cbe0f5);
+  background-image: -moz-linear-gradient(top, #d7e5f5, #cbe0f5);
+  background-image: -ms-linear-gradient(top, #d7e5f5, #cbe0f5);
+  background-image: -o-linear-gradient(top, #d7e5f5, #cbe0f5);
+  background-image: linear-gradient(top, #d7e5f5, #cbe0f5);
+  border: 1px solid rgba(255,255,255,0.5);
+  border-radius: 3px;
+  color: rgba(255,255,255,0.7);
+  padding: 5px 20px;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  font-family: "Helvetica Neue";
+  opacity: 0.7;
+  cursor: pointer;
+  transition: 0.3s opacity;
+}
+#boards input, #people input {
+  padding: 5px 10px;
+  cursor: auto;
+  border: 1px solid #5C6A78;
+  text-shadow: none;
+  color: rgba(0,0,0,0.8);
+
+}
+#boards button:hover, #boards button.active {
+  opacity: 1;
+}
+#colors button {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 1px solid #222;
+  box-shadow: 0px 0px 5px rgba(255,255,255,0.5) inset;
+  opacity: 1;
+}
+#colors button:hover {
+  opacity: 0.5;
+}
+#colors button.color.gray { background: #777; }
+#colors button.color.blue { background: #245791; }
+#colors button.color.green { background: #3C9124; }
+#colors button.color.red { background: #912424; }
+#colors button.color.purple { background: #4E2491; }
+
+#people #login-buttons {
+  float: left;
+  line-height: 25px;
+  opacity: 0.8;
+}
+#newWidgets {
+  float: right;
+}
+#newWidgets button {
+  font-family: "iconSweetsRegular";
+  border: none;
+  background: #ccc;
+  font-size: 20px;
+  line-height: 20px;
+  padding: 5px 8px 8px;
+  float: right;
+  margin-right: 5px;
+  box-shadow: 0px 0px 15px rgba(0,0,0,0.7);
+  border-radius: 2px;
+  transition: 0.2s all;
+  border: 1px solid #555;
+  cursor: pointer;
+}
+#newWidgets button:hover {
+  opacity: 0.6;
 }
 .dashboard {
   width: 100%;
   height: 100%;
   color: white;
-  background: url('assets/tweed.png');
+  background: url('/assets/tweed.png');
 }
 #widgets {
   padding: 20px;
+  box-sizing: margin-box;
+  position: relative;
 }
 .widget {
-    color: black;
-    padding: 10px;
-    background: white;
-    box-shadow: 0px 0px 30px rgba(0,0,0,0.7) inset;
-    width: 300px;
-    background: -webkit-linear-gradient(top, #f4f4f4 0%,#d3d3d3 100%);
-    height: 300px;
-    display: inline-block;
-    margin: 10px 10px 0 0;
+  color: black;
+  background: white;
+  box-shadow: 0px 0px 30px rgba(0,0,0,0.7) inset;
+  background: -webkit-linear-gradient(top, #fafafa 0%,#e3e3e3 100%);
+  display: inline-block;
+  margin: 10px;
+  position: absolute !important;
+  transition: 0.2s opacity;
+}
+.widget .remove-widget-icon {
+  font-family: "iconSweetsRegular";
+  float: right;
+  opacity: 0;
+  color: black !important;
+  text-shadow: none;
+  transition: 0.2s opacity, 0.2s color, 0.2s text-shadow;
+  cursor: pointer;
+}
+.widget .remove-widget-icon.visible {
+  opacity: 0.5;
+}
+.widget .remove-widget-icon:hover {
+  color: white !important;
+  text-shadow: 0px 0px 2px rgba(0,0,0,0.9);
+}
+.widget.ui-resizable-resizing, .widget.ui-draggable-dragging {
+  opacity: 0.7;
+}
+.widget.ui-state-disabled {
+  opacity: 1 !important;
+  background: -webkit-linear-gradient(top, #fafafa 0%, #e3e3e3 100%) !important;
+}
+.stickyNote {
+  padding: 10px;
+  height: 200px;
+  width: 200px;
+}
+.stickyNote h2 {
+  margin: -10px -10px 10px;
+  background: rgba(0,0,0,0.3);
+  padding: 10px;
+  line-height: normal;
+  font-size: 18px;
+  color: white;
+  text-shadow: 2px 2px 5px rgba(0,0,0,0.6);
 }
 .stickyEdit {
-    display: none;
+  display: none;
+  margin-left: -2px;
+  width: 100%;
+  background: none;
+}
+.dateTime {
+  width: 300px;
+  height: 85px;
+  text-align: center;
+  background: rgba(0,0,0,0.5);
+  color: white;
+  padding: 10px;
+}
+.dateTime h2 {
+  font-weight: 300;
+  font-size: 50px;
+  margin: 0;
+  padding: 0;
+  line-height: normal;
+}
+.dateTime .time {
+  opacity: 0.5;
+}
+.clear {
+  clear: both;
+}
+
+.ui-resizable-handle { z-index: auto !important; }
+
+@media screen and (max-device-width: 640px), screen and (max-width: 640px) { 
+  body, html {
+    overflow-y: auto;
+    height: auto;
+  }
+  .widget {
+    position: static !important;
+    width: auto !important;
+    display: block;
+    top: auto;
+    left: auto;
+  }
+}
+
+svg {
+  fill: teal;
+}
+.scoreBoard {
+    padding: 20px;
 }
