@@ -12,7 +12,7 @@ _.extend(Chatbox.prototype, {
       for (var i = 0; i < this.messages.length; i++) {
         this.html += '<div><b>' + this.messages[i].username + ':</b> ' + this.messages[i].content + '</div>';
       }
-      this.html += '<form id="chatbox"><input type="text" name="content"/></form>';
+      this.html += '<form class="chatbox"><input type="text" name="content"/></form>';
     }
     this.html += this.generateFooter();
   },
@@ -20,11 +20,11 @@ _.extend(Chatbox.prototype, {
     this.render();
   },
   rendered: function() {
-      $("#chatbox").unbind();
 
     widget = this;
     widgetInDom = this.widgetInDom();
-    $("#chatbox").submit(function() {
+    widgetInDom.find('.chatbox').unbind();
+    widgetInDom.find('.chatbox').submit(function() {
       value = $(widgetInDom).find("input[name=content]").val();
       $(widgetInDom).find("input[name=content]").val("");
       newMessage = {};
