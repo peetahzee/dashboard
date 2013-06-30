@@ -155,3 +155,6 @@ h1 {
 svg {
   fill: teal;
 }
+.scoreBoard {
+    padding: 20px;
+}
