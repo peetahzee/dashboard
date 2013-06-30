@@ -16,12 +16,48 @@ _.extend(StickyNote.prototype, {
   getData: function() {
   	this.render();
   },
-  save:  function(val) {
+  save: function(val) {
     toSet = {};
     toSet['data.content'] = val;
     if (this._id) {
         Widgets.update(this._id, { $set: toSet });
     }
+  },
+  rendered: function() {
+    var widget = this; // for context
+    var widgetInDom = this.widgetInDom();
+
+    var height = this.widgetInDom().innerHeight() - this.widgetInDom().find("h2").height() - 65;
+    widgetInDom.find("textarea").css("height", height);
+    
+    widgetInDom.find('.stickyData').click(function() {
+      // Want to toggle based on when clicking
+      if (widgetInDom.find(".stickyData").css("display") === "block") {
+        widgetInDom.find(".stickyData").css("display", "none");
+        widgetInDom.find("textarea").css("display", "block");
+        widgetInDom.find("textarea").focus();
+
+        widgetInDom.resizable('disable');
+      } else if (!($("input,textarea").is(":focus"))) {
+        widgetInDom.find(".stickyData").css("display", "block");
+        widgetInDom.find("textarea").css("display", "none");
+
+        widgetInDom.resizable('enable');
+      }
+    });
+
+    this.setupResizeDrag();
+
+    // Able to edit..
+    widgetInDom.find(".stickyEdit").unbind("keypress");
+    widgetInDom.find(".stickyEdit").keypress(function(e) {
+      if (e.charCode == 13) {
+        widget.save($(this).val());
+      }
+    });
+  },
+  clicked: function() {
+
   }
 });
 
