@@ -2,11 +2,14 @@ StickyNotes = function(widget) {
   _.extend(this, widget);
 };
 
+_.extend(StickyNotes.prototype, WidgetType);
+
 _.extend(StickyNotes.prototype, {
+  widgetTypeName: "stickyNote",
   render: function() {
-    this.html = '<div id="widget_' + this.widgetId + '" style="'+ this.data.style + '" class="widget">';
+    this.html = this.generateHeader();
     this.html += '<h2>Sticky Note</h2>';
     this.html += this.data.content;
-    this.html += '</div>';
+    this.html += this.generateFooter();
   }
 });
