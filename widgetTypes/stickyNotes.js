@@ -35,6 +35,6 @@ NewStickyNote = function () {
   };
 };
 
-wtToCreate = {typeName: 'Sticky Notes', className: "StickyNote"};
+wtToCreate = {typeName: 'Sticky Notes', className: "StickyNote", icon: "C"};
 WidgetTypes.push(wtToCreate);
 

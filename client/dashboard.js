@@ -24,7 +24,7 @@ Template.dashboard.events({
   'click button#addWidgetButton': function () {
     html = '';
     for (var i = 0; i < WidgetTypes.length; i++) {
-      html += '<button class="addWidget" value="New'+WidgetTypes[i].className+'">C</button>';
+      html += '<button class="addWidget" value="New'+WidgetTypes[i].className+'">'+WidgetTypes[i].icon+'</button>';
 
     }
     $('#newWidgets').fadeOut(200, function() {

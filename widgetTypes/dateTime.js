@@ -8,8 +8,8 @@ _.extend(DateTime.prototype, {
   widgetTypeName: "dateTime",
   render: function() {
     this.html = this.generateHeader();
-    this.html += '<h2> Time: '+ this.data.time + '</h2>';
-    this.html += '<div class="time"> Date: '+this.data.date+'</div>';
+    this.html += '<h2>'+ this.data.time + '</h2>';
+    this.html += '<div class="time">'+this.data.date+'</div>';
     this.html += this.generateFooter();
   },
   getData: function() {
@@ -19,9 +19,13 @@ _.extend(DateTime.prototype, {
     }, 1000);
     this.render();
   },
-  });
+});
 
-  function updateDate(id) {
+function updateDate(id) {
+    widgetInDom = $("#widget_" + id);
+    if (widgetInDom.hasClass('ui-resizable-resizing') ||
+      widgetInDom.hasClass('ui-draggable-dragging')) return;
+
     var d = new Date();
     seconds = d.getSeconds();
     if (seconds < 10) {
@@ -37,7 +41,7 @@ _.extend(DateTime.prototype, {
     toSet['data.time'] = time;
     toSet['data.date'] = date;
     Widgets.update(id, {$set: toSet});
-  }
+}
 NewDateTime = function () {
 	return {
         widgetType: "DateTime",
@@ -49,6 +53,6 @@ NewDateTime = function () {
      };
  }
 
-wtToCreate = {typeName: 'Date/Time', className: "DateTime"};
+wtToCreate = {typeName: 'Date/Time', className: "DateTime", icon: "S"};
 WidgetTypes.push(wtToCreate);
 
