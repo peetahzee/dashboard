@@ -1,5 +1,5 @@
 Dashboards = new Meteor.Collection("dashboards");
-
+Invites = new Meteor.Collection("invites");
 Widgets = new Meteor.Collection("widgets", {
   transform: function(doc) {
       doc = eval("new " + doc.widgetType + "(doc)");
@@ -19,13 +19,30 @@ Template.dashboard.dashboard = function() {
     dashboard = Dashboards.findOne({_id : Session.get('db')._id});
     return dashboard;
   }
-  dashboard = Dashboards.findOne({users: this.userId});
+  console.log(Meteor.userId());
+  dashboard = Dashboards.findOne({users: Meteor.userId()});
   Session.set("db", dashboard);
   return dashboard;
 }
 
+function update(doc, idx) {
+  console.log("HIF:SDFJ");
+  console.log(doc);
+}
+
+Template.dashboard.rendered = function() {
+  $("#invite").submit(function() {
+    value = $(this).find("input[name=email]").val();
+    Invites.insert({
+      'dashId': Session.get("db")._id,
+      'email': value,
+    });
+    return false;
+  });
+}
+
 Template.dashboard.boards = function() {
-  return Dashboards.find({users : this.userId});
+  return Dashboards.find({users : Meteor.userId()});
 }
 
 Template.dashboard.events({
@@ -57,9 +74,11 @@ Template.dashboard.events({
 
 
   'click button#addDashboard': function (event) {
+    console.log(Meteor.userId());
+    console.log("adddash");
     Dashboards.insert({
       name: "Test Dashboard2",
-      users: [this.userId],
+      users: [Meteor.userId()],
     });
   },
 
