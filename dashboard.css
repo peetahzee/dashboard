@@ -19,7 +19,6 @@ body, html {
 }
 header {
   width: 100%;
-  padding: 20px;
   background: #777;
   box-shadow: 0px 0px 20px rgba(0,0,0,0.8);
 }
@@ -32,9 +31,61 @@ h1 {
   display: inline-block;
   float: left;
 }
+#boards, #people {
+  background: rgba(0,0,0,0.4);
+  padding: 10px 20px;
+  display: none;
+  border-bottom: 1px solid #333;
+}
+#actualHeader {
+  padding: 20px;
+}
+
+#boards form, #people form {
+  display: inline-block;
+  float: right;
+}
+#boards button, #boards input, #people input {
+  display: inline-block;
+  width :auto;
+  background-color: #d7e5f5;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #d7e5f5), color-stop(100%, #cbe0f5));
+  background-image: -webkit-linear-gradient(top, #d7e5f5, #cbe0f5);
+  background-image: -moz-linear-gradient(top, #d7e5f5, #cbe0f5);
+  background-image: -ms-linear-gradient(top, #d7e5f5, #cbe0f5);
+  background-image: -o-linear-gradient(top, #d7e5f5, #cbe0f5);
+  background-image: linear-gradient(top, #d7e5f5, #cbe0f5);
+  border-top: 1px solid #abbbcc;
+  border-left: 1px solid #a7b6c7;
+  border-bottom: 1px solid #a1afbf;
+  border-right: 1px solid #a7b6c7;
+  border-radius: 3px;
+  -webkit-box-shadow: inset 0 1px 0 0 white;
+  box-shadow: inset 0 1px 0 0 white;
+  color: #1a3e66;
+  padding: 5px 20px;
+  text-shadow: 0 1px 1px #fff;
+  font-family: "Helvetica Neue";
+  opacity: 0.7;
+  cursor: pointer;
+  transition: 0.3s opacity;
+}
+#boards input, #people input {
+  padding: 5px 10px;
+  cursor: auto;
+  border: 1px solid #5C6A78;
+
+}
+#boards button:hover, #boards button.active {
+  opacity: 1;
+}
+#people #login-buttons {
+  float: left;
+  line-height: 25px;
+  opacity: 0.8;
+}
 #newWidgets {
   float: right;
-  margin-right: 50px;
 }
 #newWidgets button {
   font-family: "iconSweetsRegular";
@@ -63,6 +114,7 @@ h1 {
 #widgets {
   padding: 20px;
   box-sizing: margin-box;
+  position: relative;
 }
 .widget {
   color: black;
@@ -70,7 +122,7 @@ h1 {
   box-shadow: 0px 0px 30px rgba(0,0,0,0.7) inset;
   background: -webkit-linear-gradient(top, #fafafa 0%,#e3e3e3 100%);
   display: inline-block;
-  margin: 10px 10px 0 0;
+  margin: 10px;
   position: absolute !important;
   transition: 0.2s opacity;
 }
@@ -138,6 +190,8 @@ h1 {
 .clear {
   clear: both;
 }
+
+.ui-resizable-handle { z-index: auto !important; }
 
 @media screen and (max-device-width: 640px), screen and (max-width: 640px) { 
   body, html {

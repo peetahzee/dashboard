@@ -40,7 +40,6 @@ Meteor.startup(function() {
       users: [],
     });
   }
-  console.log("HI");
   invites = Invites.find().observeChanges({
       added: function(doc, idx) {
       	  invite = Invites.findOne({_id : doc});

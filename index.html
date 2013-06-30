@@ -16,26 +16,30 @@
 <template name="dashboard">
 <div class="dashboard">
   <header>
-    <h1>{{dashboard.name}}</h1>
-     {{#each boards}}
-     	<button class="dashboard" value="{{this._id}}">{{this.name}}</button>
-     {{/each}}
-      <form id="addDashboard">
-      	<input type="text" name="name"/>
-      	<input type="submit" value="Add Dashboard"/>
-      </form>
-
-    	<form id="invite">
-    		<input type="text" name="email"/>
-    		<input type="submit" value="Invite"/>
-    	</form>
-    <div id="newWidgets">
-      <button id="addWidgetButton" class="add">+</button>
+    <div id="boards">
+      {{#each boards}}
+        <button class="dashboard" value="{{this._id}}">{{this.name}}</button>
+      {{/each}}
+      <form id="addDashboard"><input type="text" name="name" placeholder="+ dashboard" /></form>
+      <div class="clear"></div>
     </div>
-	<div>
-	  {{loginButtons}}
-	</div>
-    <div class="clear"></div>
+    <div id="people">
+      <form id="invite">
+        <input type="text" name="email" placeholder="+ invite" />
+      </form>
+      {{loginButtons}}
+      <div class="clear"></div>
+    </div>
+    <div id="actualHeader">
+      <h1>{{dashboard.name}}</h1>
+        <div id="newWidgets">
+          <button id="addWidgetButton">+</button>
+          <button id="viewBoardsButton">3</button>
+          <button id="viewPeopleButton">f</button>
+        </div>
+        <div class="clear"></div>
+    </div>
+    
   </header>
   <div id="widgets">
     {{#each dashboard.widgets}}

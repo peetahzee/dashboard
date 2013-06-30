@@ -45,7 +45,6 @@ if(Meteor.isServer) {
     toSet['data.time'] = time;
     toSet['data.date'] = date;
     Widgets.update(widget._id, {$set: toSet});
-    console.log('boo');
   }
   Meteor.setInterval(function() {
     Widgets.find({"widgetType": "DateTime"}).forEach(function(widget) {

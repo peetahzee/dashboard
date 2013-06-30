@@ -19,7 +19,6 @@ Template.dashboard.dashboard = function() {
     dashboard = Dashboards.findOne({_id : Session.get('db')._id});
     return dashboard;
   }
-  console.log(Meteor.userId());
   dashboard = Dashboards.findOne({users: Meteor.userId()});
   Session.set("db", dashboard);
   return dashboard;
@@ -63,6 +62,24 @@ Template.dashboard.events({
       $('#newWidgets').html(html);
       $("#newWidgets").fadeIn(200);
     });
+  },
+
+  'click button#viewBoardsButton': function() {
+    if( $("#boards").is(':visible')) {
+      $("#boards").slideUp();
+    } else {
+      $('#boards button').removeClass('active');
+      $("button[value=" + Session.get("db")._id+"]").addClass('active');
+      $("#boards").slideDown();
+    }
+  },
+
+  'click button#viewPeopleButton': function() {
+    if( $("#people").is(':visible')) {
+      $("#people").slideUp();
+    } else {
+      $("#people").slideDown();
+    }
   },
 
   'click button.addWidget': function (event) {
