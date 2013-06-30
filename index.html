@@ -15,14 +15,16 @@
 
 <template name="dashboard">
 <div class="dashboard">
-  <header>
+  <header style="background: #{{dashboard.color}}">
+
     <div id="boards">
       {{#each boards}}
-        <button class="dashboard" value="{{this._id}}">{{this.name}}</button>
+        <button class="dashboard" style="background: #{{this.color}}" value="{{this._id}}">{{this.name}}</button>
       {{/each}}
       <form id="addDashboard"><input type="text" name="name" placeholder="+ dashboard" /></form>
       <div class="clear"></div>
     </div>
+
     <div id="people">
       <form id="invite">
         <input type="text" name="email" placeholder="+ invite" />
@@ -30,12 +32,24 @@
       {{loginButtons}}
       <div class="clear"></div>
     </div>
+
+    <div id="settings">
+      <div id="colors">
+        <button class="color gray" value="777"></button>
+        <button class="color blue" value="245791"></button>
+        <button class="color green" value="3C9124"></button>
+        <button class="color red" value="912424"></button>
+        <button class="color purple" value="4E2491"></button>
+      </div>
+    </div>
+
     <div id="actualHeader">
       <h1>{{dashboard.name}}</h1>
         <div id="newWidgets">
           <button id="addWidgetButton">+</button>
           <button id="viewBoardsButton">3</button>
           <button id="viewPeopleButton">f</button>
+          <button id="viewSettingsButton">k</button>
         </div>
         <div class="clear"></div>
     </div>

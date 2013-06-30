@@ -31,7 +31,7 @@ h1 {
   display: inline-block;
   float: left;
 }
-#boards, #people {
+#boards, #people, #settings {
   background: rgba(0,0,0,0.4);
   padding: 10px 20px;
   display: none;
@@ -45,7 +45,7 @@ h1 {
   display: inline-block;
   float: right;
 }
-#boards button, #boards input, #people input {
+#boards button, #boards input, #people input, #colors button {
   display: inline-block;
   width :auto;
   background-color: #d7e5f5;
@@ -55,16 +55,11 @@ h1 {
   background-image: -ms-linear-gradient(top, #d7e5f5, #cbe0f5);
   background-image: -o-linear-gradient(top, #d7e5f5, #cbe0f5);
   background-image: linear-gradient(top, #d7e5f5, #cbe0f5);
-  border-top: 1px solid #abbbcc;
-  border-left: 1px solid #a7b6c7;
-  border-bottom: 1px solid #a1afbf;
-  border-right: 1px solid #a7b6c7;
+  border: 1px solid rgba(255,255,255,0.5);
   border-radius: 3px;
-  -webkit-box-shadow: inset 0 1px 0 0 white;
-  box-shadow: inset 0 1px 0 0 white;
-  color: #1a3e66;
+  color: rgba(255,255,255,0.7);
   padding: 5px 20px;
-  text-shadow: 0 1px 1px #fff;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
   font-family: "Helvetica Neue";
   opacity: 0.7;
   cursor: pointer;
@@ -74,11 +69,30 @@ h1 {
   padding: 5px 10px;
   cursor: auto;
   border: 1px solid #5C6A78;
+  text-shadow: none;
+  color: rgba(0,0,0,0.8);
 
 }
 #boards button:hover, #boards button.active {
   opacity: 1;
 }
+#colors button {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 1px solid #222;
+  box-shadow: 0px 0px 5px rgba(255,255,255,0.5) inset;
+  opacity: 1;
+}
+#colors button:hover {
+  opacity: 0.5;
+}
+#colors button.color.gray { background: #777; }
+#colors button.color.blue { background: #245791; }
+#colors button.color.green { background: #3C9124; }
+#colors button.color.red { background: #912424; }
+#colors button.color.purple { background: #4E2491; }
+
 #people #login-buttons {
   float: left;
   line-height: 25px;

@@ -37,7 +37,6 @@ Template.dashboard.rendered = function() {
 
   $("#addDashboard").unbind();
   $("#addDashboard").submit(function() {
-    console.log("HI");
     value = $(this).find("input[name=name]").val();
     Dashboards.insert({
       name: value,
@@ -82,6 +81,18 @@ Template.dashboard.events({
     }
   },
 
+  'click button#viewSettingsButton': function() {
+    if( $("#settings").is(':visible')) {
+      $("#settings").slideUp();
+    } else {
+      $("#settings").slideDown();
+    }
+  },
+
+  'click button.color': function(event) {
+    Dashboards.update(Session.get("db")._id, {$set: {'color': event.target.value}});
+  },
+
   'click button.addWidget': function (event) {
     widget = eval("new " + event.target.value + "()");
 
@@ -98,7 +109,6 @@ Template.dashboard.events({
 });
 
 Template.widget.widget = function () {
-  console.log("by");
   widget =  Widgets.findOne({_id: this.toString()});
   return widget;
 }
