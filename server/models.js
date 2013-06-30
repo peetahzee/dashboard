@@ -1,5 +1,6 @@
 Dashboards = new Meteor.Collection("dashboards");
 Widgets = new Meteor.Collection("widgets");
+Invites = new Meteor.Collection("invites");
 
 Meteor.startup(function() {
   if(Widgets.find().count() === 0) {
@@ -31,7 +32,21 @@ Meteor.startup(function() {
     Dashboards.insert({
       name: "Test Dashboard",
       widgets: [id, id2],
+      users: [],
+    });
+     Dashboards.insert({
+      name: "Test Dashboard2",
+      widgets: [id],
+      users: [],
     });
   }
+  console.log("HI");
+  invites = Invites.find().observeChanges({
+      added: function(doc, idx) {
+      	  invite = Invites.findOne({_id : doc});
+      	  user = Meteor.users.findOne({'emails.0.address': invite.email});
+          Dashboards.update(invite.dashId, {$push: {users: user._id}});
+        }  	
+  });
 });
 

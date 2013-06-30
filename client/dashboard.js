@@ -1,5 +1,5 @@
 Dashboards = new Meteor.Collection("dashboards");
-
+Invites = new Meteor.Collection("invites");
 Widgets = new Meteor.Collection("widgets", {
   transform: function(doc) {
       doc = eval("new " + doc.widgetType + "(doc)");
@@ -14,11 +14,43 @@ var dashboard = null;
 var widgets = null;
 
 Template.dashboard.dashboard = function() {
-  dashboard = Dashboards.findOne();
+  Session.get("new_widget");
+  if (Session.get('db')) {
+    dashboard = Dashboards.findOne({_id : Session.get('db')._id});
+    return dashboard;
+  }
+  console.log(Meteor.userId());
+  dashboard = Dashboards.findOne({users: Meteor.userId()});
   Session.set("db", dashboard);
   return dashboard;
 }
 
+Template.dashboard.rendered = function() {
+  $("#invite").unbind();
+  $("#invite").submit(function() {
+    value = $(this).find("input[name=email]").val();
+    Invites.insert({
+      'dashId': Session.get("db")._id,
+      'email': value,
+    });
+    return false;
+  });
+
+  $("#addDashboard").unbind();
+  $("#addDashboard").submit(function() {
+    console.log("HI");
+    value = $(this).find("input[name=name]").val();
+    Dashboards.insert({
+      name: value,
+      users: [Meteor.userId()],
+    });
+    return false;
+  });
+}
+
+Template.dashboard.boards = function() {
+  return Dashboards.find({users : Meteor.userId()});
+}
 
 Template.dashboard.events({
   'click button#addWidgetButton': function () {
@@ -38,10 +70,18 @@ Template.dashboard.events({
 
     id = Widgets.insert(widget);
     Dashboards.update(Session.get("db")._id, {$push: {widgets: id}});
+    dashboard = Session.get("db");
+    Session.set("new_widget", id);
+  },
+
+  'click button.dashboard': function(event) {
+    dashboard = Dashboards.findOne({_id: event.target.value});
+    Session.set("db", dashboard);
   },
 });
 
 Template.widget.widget = function () {
+  console.log("by");
   widget =  Widgets.findOne({_id: this.toString()});
   return widget;
 }
