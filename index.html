@@ -5,6 +5,7 @@
     <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/themes/base/jquery-ui.css"/>
     <meta name="viewport" content="width=device-width, initial-scale=0.9, user-scalable=no">
     <title>Dashboard</title>
+    <script src="https://apis.google.com/js/client.js"></script>
 </head>
 
 <body>
@@ -43,6 +44,7 @@
       </div>
     </div>
 
+
     <div id="actualHeader">
       <h1>{{dashboard.name}}</h1>
         <div id="newWidgets">
@@ -53,7 +55,7 @@
         </div>
         <div class="clear"></div>
     </div>
-    
+
   </header>
   <div id="widgets">
     {{#each dashboard.widgets}}
