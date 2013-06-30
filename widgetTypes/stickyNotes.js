@@ -12,6 +12,14 @@ _.extend(StickyNote.prototype, {
     this.html += '<div class="stickyData">' + this.data.content + "</div>";
     this.html += '<textarea rows="2" cols="30" class="stickyEdit">' + this.data.content + '</textarea>';
     this.html += this.generateFooter();
+  },
+
+  save:  function(val) {
+    toSet = {};
+    toSet['widgets.' + this.widgetId + '.data.content'] = val;
+    if (Session.get("db")._id) {
+        Dashboards.update(Session.get("db")._id, { $set: toSet });
+    }
   }
 });
 
