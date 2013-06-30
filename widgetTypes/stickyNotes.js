@@ -23,7 +23,7 @@ _.extend(StickyNote.prototype, {
     var widget = this; // for context
     var widgetInDom = this.widgetInDom();
     widgetInDom.unbind();
-    
+
     widgetInDom.find('.stickyData').click(function() {
       // Want to toggle based on when clicking
       if (widgetInDom.find(".stickyData").css("display") === "block") {
