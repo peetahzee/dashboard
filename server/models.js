@@ -24,7 +24,7 @@ Meteor.startup(function() {
                 {key: "Ali", score: 3}
             ]
         },
-        position: {x: 0, y: 0}
+        position: {x: 0, y: 0},
   	});
   }
 
