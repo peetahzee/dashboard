@@ -22,10 +22,9 @@ Template.dashboard.dashboard = function() {
 
 Template.dashboard.events({
   'click input.add': function () {
-    var types = ['NewStickyNote'];
-    html = ''
-    for (int i = 0; i < types.length; i++) {
-      html = '<input type="button" class="addWidget" value="'+types[i]+'"/>';
+    html = '';
+    for (var i = 0; i < WidgetTypes.length; i++) {
+      html = '<input type="button" class="addWidget" value="New'+WidgetTypes[i].className+'"/>';
     }
     document.getElementById('newWidgets').innerHTML = html;  
   },
