@@ -17,11 +17,11 @@ Meteor.startup(function() {
   	var id2 = Widgets.insert({
   		widgetType: "ScoreBoard",
         data: {
-            content: {
-                Peter: 10,
-                Junjun: 15,
-                Ali: 5
-            }
+            content: [
+                {key: "Peter", score: 0},
+                {key: "Junjun", score: 10},
+                {key: "Ali", score: 3}
+            ]
         },
         position: {x: 0, y: 0}
   	});
