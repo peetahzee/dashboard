@@ -14,6 +14,7 @@ body, html {
   margin: 0;
   padding: 0;
   height: 100%;
+  box-sizing: margin-box;
   overflow: hidden;
 }
 header {
@@ -61,6 +62,7 @@ h1 {
 }
 #widgets {
   padding: 20px;
+  box-sizing: margin-box;
 }
 .widget {
   color: black;
@@ -137,4 +139,16 @@ h1 {
   clear: both;
 }
 
+@media (max-width: 900px) {
+  body, html {
+    overflow-y: auto;
+  }
+  .widget {
+    position: static !important;
+    width: auto !important;
+    display: block;
+    top: auto;
+    left: auto;
+  }
+}
 
