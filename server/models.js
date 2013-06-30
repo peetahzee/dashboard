@@ -1,5 +1,4 @@
 Dashboards = new Meteor.Collection("dashboards");
-WidgetTypes = new Meteor.Collection("widgetTypes");
 
 Meteor.startup(function() {
 
@@ -7,7 +6,7 @@ Meteor.startup(function() {
     Dashboards.insert({
       name: "Test Dashboard",
       widgets: [ {
-        widgetType: "StickyNotes",
+        widgetType: "StickyNote",
         data: {
           content: "Bleh.",
           style: "color: blue;"
@@ -17,7 +16,7 @@ Meteor.startup(function() {
         height: 10
       },
       {
-        widgetType: "StickyNotes",
+        widgetType: "StickyNote",
         data: {
           content: "Bleh2.",
           style: "color: red;"

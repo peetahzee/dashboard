@@ -9,23 +9,20 @@ Dashboards = new Meteor.Collection("dashboards", {
     return doc;
   }
 });
-Widgets = new Meteor.Collection("widgets");
-WidgetTypes = new Meteor.Collection("widgetTypes");
 
 var dashboard = null;
 var widgets = null;
 
 Template.dashboard.dashboard = function() {
-	dashboard = Dashboards.findOne();
+    dashboard = Dashboards.findOne();
     Session.set("db", dashboard);
-
-	return dashboard;
+    return dashboard;
 }
 
 Template.widget.events({
     'click': function (event) {
         Dashboards.update({_id: dashboard._id},
-        	{ '$set': {'widgets.0.data.content': 'hello5'} }
+          { '$set': {'widgets.0.data.content': 'hello5'} }
         );
     },
 

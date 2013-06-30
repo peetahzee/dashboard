@@ -1,10 +1,10 @@
-StickyNotes = function(widget) {
+StickyNote = function(widget) {
   _.extend(this, widget);
 };
 
-_.extend(StickyNotes.prototype, WidgetType);
+_.extend(StickyNote.prototype, WidgetType);
 
-_.extend(StickyNotes.prototype, {
+_.extend(StickyNote.prototype, {
   widgetTypeName: "stickyNote",
   render: function() {
     this.html = this.generateHeader();
@@ -13,3 +13,8 @@ _.extend(StickyNotes.prototype, {
     this.html += this.generateFooter();
   }
 });
+
+
+wtToCreate = {typeName: 'Sticky Notes', className: "StickyNote"};
+WidgetTypes.push(wtToCreate);
+
