@@ -120,5 +120,6 @@ h1 {
 .clear {
   clear: both;
 }
-
-
+svg {
+  fill: teal;
+}

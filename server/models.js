@@ -18,9 +18,9 @@ Meteor.startup(function() {
   		widgetType: "ScoreBoard",
         data: {
             content: {
-                Peter: 0,
-                Junjun: 10,
-                Ali: -3
+                Peter: 10,
+                Junjun: 15,
+                Ali: 5
             }
         },
         position: {x: 0, y: 0}

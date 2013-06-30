@@ -48,6 +48,5 @@ Template.widget.widget = function () {
 
 Template.widget.rendered = function() {
   var widget = Widgets.findOne({_id: this.data});
-  
   widget.rendered();
 }
