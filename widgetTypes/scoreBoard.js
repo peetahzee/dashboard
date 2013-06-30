@@ -9,7 +9,7 @@ _.extend(ScoreBoard.prototype, {
     render: function() {
         this.html = this.generateHeader();
 
-        this.html += "<h2>Board of Doom</h2><div id='newCol'><button id='addCol' class='add'>+</button></div><div><button id='editTable' class='edit'>E</button></div>";
+        this.html += "<h2>Board of Doom</h2><div id='newCol'><button id='addCol' class='add'>+</button></div>";
         this.html += this.generateFooter();
 
         var dblClick = false;
@@ -28,80 +28,90 @@ _.extend(ScoreBoard.prototype, {
             });
         }
 
+        var selectedItemId = null;
+
         var widgetInDom = this.widgetInDom();
         widgetInDom.unbind();
 
         self.setupResizeDragDelete();
 
         widgetInDom.find(".barRect").click(function(d) {
+            selectedItemid = self._id;
             barClickHandler(d, self, $(this));
         });
 
         widgetInDom.find(".barName").click(function(d) {
-            if ($(this).attr("value")) {
-                setTimeout(barClickHandler(d, self, $(this)), 500);
+            var newKeyValue = window.prompt("Please enter new name: ");
+            if (newKeyValue == null) {
+                // Don't want to bother
+                return;
             }
-        });
+            var tempArray = self.data.content;
 
-        widgetInDom.find("button#editTable").click(function (d) {
-            console.log("hate this");
-
-            var widgetId = "#widget_" + self.widgetId;
-
-            var vis = d3.select(widgetId);
-            vis.select("svg").remove();
-
-            var htmlInner = "<table class='editBarChart'>";
-            htmlInner += "<tr><th>Name</th><th>Value</th></tr>";
-
-            for (var i in self.data.content) {
-                htmlInner += "<tr>";
-                htmlInner += ("<td class='barKey'><input type='text' value=" + self.data.content[i].key + "></input></td>");
-                htmlInner += ("<td class='barScore'><input type='text' value=" + self.data.content[i].score + "></input></td>");
-                htmlInner += "</tr>";
-            }
-
-            htmlInner += "</table>";
-            $(widgetId).append(htmlInner);
-        });
-
-        widgetInDom.find(".barName").hover(function() {
-            alert("blargl");
-        });
-
-/*            $(widgetId).find("input").blur(function() {
-                if ($(this).attr("name") == "barScore") {
-        console.log("need to update the score");
-        console.log($(this).parent().find("input"));
-
-                    updateScoreBoard(self._id, self.data.content, $(this).parent().find("input").val(), $(this).val());
-
-                } else {
-                    // Need to update the key
-                    var newValue = $(this).val();
-                    var tempArray = self.data.content;
-
-                    var key = $(this).closest('tr').children('td.barKey').text();
-
-                    for (var index in tempArray) {
-                        if (tempArray[index].key == key) {
-                            break;
-                        }
-                    }
-
-                    toSet = {};
-                    toSet['data.content.' + index + '.key'] = newValue;
-
-                    Widgets.update(self._id, { $set: toSet });
+            for (var index in tempArray) {
+                if (tempArray[index].key == $(this).attr("key")) {
+                    break;
                 }
+            }
+
+            toSet = {};
+            toSet['data.content.' + index + '.key'] = newKeyValue;
+            Widgets.update(self._id, { $set: toSet });
+        });
 
         widgetInDom.find("button#addCol").unbind();
         widgetInDom.find("button#addCol").click(function(d) {
-            obj = {'key': "New Column", 'score': 0};
-            Widgets.update(self._id, { $push: {'data.content' : obj}});
-        dblClick = false;
+            toSet = {};
+            toSet['data.content'] = {'key': 'New Column', 'score': 0};
+
+            Widgets.update(self._id, { $push: toSet });
+
         });
-}); */
+
+        widgetInDom.find(".editClass").click(function(d) {
+            selectedItemid = self._id;
+            barClickHandler(d, self, $(this));
+        });
+
+        var pressTimer;
+
+        widgetInDom.find(".barRect").mouseup(function(){
+            clearTimeout(pressTimer)
+            // Clear timeout
+            return false;
+        }).mousedown(function(){
+            var jQself = this;
+            // Set timeout
+            pressTimer = window.setTimeout(function() {
+                // If you hold it for over two seconds, allow a delete.
+                toSet = {}
+                toSet['data.content'] = {
+                    'key': $(jQself).attr("key"),
+                    'score': parseInt($(jQself).attr("value"))
+                };
+                var response = window.confirm("Are you sure you want to delete?");
+                if (response) {
+                    Widgets.update(self._id, { $pull: toSet });
+                }
+            }, 1000)
+            return false;
+        });
+
+        widgetInDom.find(".barName").hover(function() {
+        });
+
+        widgetInDom.find(".barRect").hover(function() {
+            var temp = d3.select(this)
+                            .attr("opacity", "0.5");
+        });
+
+        widgetInDom.find(".barRect").mouseleave(function() {
+            /* var temp = d3.select(this)
+                            .attr("opacity", ""); */
+        });
+    }
+});
+
 
 var barClickHandler = function(d, self, obj) {
     var oldValue = parseInt(obj.attr("value"));
@@ -180,6 +190,13 @@ var drawGraph = function(self) {
         .attr("font-size", "14px")
         .attr("fill", "black")
         .attr("text-anchor", "middle")
+        .attr("class", "editClass")
+        .attr("value", function(d) {
+            return d.score;
+        })
+        .attr("key", function(d) {
+            return d.key;
+        })
 
     svg.selectAll("text.name")
         .data(self.data.content)
