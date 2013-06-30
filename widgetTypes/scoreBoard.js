@@ -9,7 +9,7 @@ _.extend(ScoreBoard.prototype, {
     render: function() {
         this.html = this.generateHeader();
 
-        this.html += "<h2>blargl</h2>";
+        this.html += "<h2>Board of Doom</h2><div id='newCol'><button id='addCol' class='add'>+</button></div>";
         this.html += this.generateFooter();
     },
     getData: function() {
@@ -32,36 +32,39 @@ _.extend(ScoreBoard.prototype, {
         self.setupResizeDragDelete();
 
         widgetInDom.find(".barRect").click(function(d) {
-            var oldValue = parseInt($(this).attr("value"));
-            var newValue;
-            if (d.shiftKey || d.altKey || d.ctrlKey) {
-                if (oldValue > 0) {
-                    newValue = oldValue - 1;
-                } else {
-                    return;
-                }
-            } else {
-                newValue = oldValue + 1;
-            }
-            updateScoreBoard(self._id, self.data.content, $(this).attr("key"), newValue);
+            barClickHandler(d, self, $(this));
         });
 
         widgetInDom.find(".barName").click(function(d) {
-            var oldValue = parseInt($(this).attr("value"));
-            var newValue;
-            if (d.shiftKey || d.altKey || d.ctrlKey) {
-                if (oldValue > 0) {
-                    newValue = oldValue - 1;
-                } else {
-                    return;
-                }
-            } else {
-                newValue = oldValue + 1;
+            if ($(this).attr("value")) {
+                barClickHandler(d, self, $(this));
             }
-            updateScoreBoard(self._id, self.data.content, $(this).attr("key"), newValue);
+        });
+
+        widgetInDom.find("button#addCol").click(function(d) {
+            console.log("blargl");
+            obj = {'key': "New Column", 'score': 0};
+            Widgets.update(self._id, { $push: {'data.content' : obj}});
         });
     }
 });
+
+var barClickHandler = function(d, self, obj) {
+    var oldValue = parseInt(obj.attr("value"));
+    var newValue;
+    if (d.shiftKey || d.altKey || d.ctrlKey) {
+        if (oldValue > 0) {
+            newValue = oldValue - 1;
+        } else {
+            console.log("blargl");
+            return;
+        }
+    } else {
+        newValue = oldValue + 1;
+    }
+    updateScoreBoard(self._id, self.data.content, obj.attr("key"), newValue);
+}
+
 
 var drawGraph = function(self) {
     //Width and height
