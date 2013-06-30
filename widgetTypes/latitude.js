@@ -8,7 +8,6 @@ _.extend(Latitude.prototype, {
   widgetTypeName: "stickyNote",
   render: function() {
     this.html = this.generateHeader();
-    this.html += '<h2>Latitude</h2>';
     this.html += '<div id="map-canvas"></div>';
     this.html += '<input type="button" class="authButton" value="Auth"/>';
 
@@ -39,6 +38,7 @@ _.extend(Latitude.prototype, {
       console.log("ID: " + widget._id);
         auth(widget._id);
     });
+    this.setupResizeDragDelete();
   },
 
   initMap: function() {
