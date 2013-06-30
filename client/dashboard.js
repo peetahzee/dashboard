@@ -5,7 +5,7 @@ Widgets = new Meteor.Collection("widgets", {
       doc = eval("new " + doc.widgetType + "(doc)");
       doc.widgetId = doc._id;
       doc.getData();
-          return doc;
+      return doc;
 
     }
 });
@@ -34,20 +34,16 @@ Template.dashboard.events({
   },
 
   'click button.addWidget': function (event) {
-    console.log(event.target.value);
     widget = eval("new " + event.target.value + "()");
-    console.log(widget);
 
     id = Widgets.insert(widget);
-    console.log(id);
-    console.log(Session.get("db")._id);
     Dashboards.update(Session.get("db")._id, {$push: {widgets: id}});
   },
 
 });
 
 Template.widget.widget = function () {
-  widget =  Widgets.findOne({_id: this});
+  widget =  Widgets.findOne({_id: this.toString()});
   return widget;
 }
 
@@ -97,7 +93,6 @@ Template.widget.rendered = function() {
   // Able to edit..
   $(idName).find(".stickyEdit").keypress(function(e) {
     if (e.charCode == 13) {
-      console.log(widget);
       widget.save($(this).val());
     }
   });
