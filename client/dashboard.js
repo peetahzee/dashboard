@@ -47,8 +47,9 @@ Template.widget.widget = function () {
 }
 
 Template.widget.rendered = function() {
-  var widget = Widgets.findOne({_id: this.data});
-  if (widget != undefined) {
-    widget.rendered();
-  }
+  Widgets.find({_id: this.data}).observe(
+    {added: function(doc) {
+      doc.rendered();
+    }}
+  );
 }

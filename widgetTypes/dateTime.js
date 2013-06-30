@@ -12,32 +12,8 @@ _.extend(DateTime.prototype, {
     this.html += '<div class="time">'+this.data.date+'</div>';
     this.html += this.generateFooter();
   },
-  getData: function() {
-    var widget = this;
-    if (!Session.get("hasBeenSet"+widget._id)) {
-      Meteor.setInterval(function() {
-        widget.updateDate(widget);
-      }, 1000);
-      Session.set("hasBeenSet"+widget._id, true);
-    }
-    this.render();
-  },
   updateDate: function() {
-    if (this.widgetInDom().hasClass('ui-resizable-resizing') ||
-      this.widgetInDom().hasClass('ui-draggable-dragging')) return;
-
-    var d = new Date();
-    seconds = d.getSeconds();
-    if (seconds < 10) { seconds = '0' + seconds; }
-    minutes = d.getMinutes();
-    if (minutes < 10) { minutes = '0' + minutes; }
-
-    time = d.getHours() + ':' + minutes + ':' + seconds;
-    date = d.getMonth() + 1 +'/'+ d.getDate() + '/'+ d.getFullYear();
-    toSet = {};
-    toSet['data.time'] = time;
-    toSet['data.date'] = date;
-    Widgets.update(this._id, { $set: toSet });
+    
   }
 });
 
@@ -55,3 +31,25 @@ NewDateTime = function () {
 wtToCreate = {typeName: 'Date/Time', className: "DateTime", icon: "S"};
 WidgetTypes.push(wtToCreate);
 
+if(Meteor.isServer) {
+  function updateDate(widget) {
+    var d = new Date();
+    seconds = d.getSeconds();
+    if (seconds < 10) { seconds = '0' + seconds; }
+    minutes = d.getMinutes();
+    if (minutes < 10) { minutes = '0' + minutes; }
+
+    time = d.getHours() + ':' + minutes + ':' + seconds;
+    date = d.getMonth() + 1 +'/'+ d.getDate() + '/'+ d.getFullYear();
+    toSet = {};
+    toSet['data.time'] = time;
+    toSet['data.date'] = date;
+    Widgets.update(widget._id, {$set: toSet});
+    console.log('boo');
+  }
+  Meteor.setInterval(function() {
+    Widgets.find({"widgetType": "DateTime"}).forEach(function(widget) {
+      updateDate(widget);
+    });
+  }, 1000);
+}

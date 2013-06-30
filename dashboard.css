@@ -139,9 +139,10 @@ h1 {
   clear: both;
 }
 
-@media (max-width: 900px) {
+@media screen and (max-device-width: 640px), screen and (max-width: 640px) { 
   body, html {
     overflow-y: auto;
+    height: auto;
   }
   .widget {
     position: static !important;

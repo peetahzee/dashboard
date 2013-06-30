@@ -129,6 +129,6 @@ NewScoreBoard = function () {
     };
 }
 
-wtToCreate = {typeName: 'Score Board', className: "ScoreBoard"};
+wtToCreate = {typeName: 'Score Board', className: "ScoreBoard", icon: "U"};
 WidgetTypes.push(wtToCreate);
 
