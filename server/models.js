@@ -14,11 +14,23 @@ Meteor.startup(function() {
         width: 100,
         height: 100
   	});
+  	var id2 = Widgets.insert({
+  		widgetType: "ScoreBoard",
+        data: {
+            content: {
+                Peter: 10,
+                Junjun: 15,
+                Ali: 5
+            }
+        },
+        position: {x: 0, y: 0}
+  	});
   }
+
   if(Dashboards.find().count() === 0) {
     Dashboards.insert({
       name: "Test Dashboard",
-      widgets: [id],
+      widgets: [id, id2],
     });
   }
 });
