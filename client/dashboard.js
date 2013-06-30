@@ -50,7 +50,7 @@ Template.widget.events({
 
             // Make div not resizable
             $(idName).resizable( "destroy" )
-        } else {
+        } else if (!($("input,textarea").is(":focus"))) {
             $(idName).find(".stickyData").css("display", "block");
             $(idName).find("textarea").css("display", "none");
 
