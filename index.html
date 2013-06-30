@@ -19,15 +19,15 @@
      {{#each boards}}
      	<button class="dashboard" value="{{this._id}}">{{this.name}}</button>
      {{/each}}
-    <div id="newDashboards">
-      <button id="addDashboard" class="add">+Dashboard</button>
-    </div>
-    <div id="invite">
+      <form id="addDashboard">
+      	<input type="text" name="name"/>
+      	<input type="submit" value="Add Dashboard"/>
+      </form>
+
     	<form id="invite">
     		<input type="text" name="email"/>
-    		<input type="submit" />
+    		<input type="submit" value="Invite"/>
     	</form>
-    </div>
     <div id="newWidgets">
       <button id="addWidgetButton" class="add">+</button>
     </div>

@@ -25,17 +25,24 @@ Template.dashboard.dashboard = function() {
   return dashboard;
 }
 
-function update(doc, idx) {
-  console.log("HIF:SDFJ");
-  console.log(doc);
-}
-
 Template.dashboard.rendered = function() {
+  $("#invite").unbind();
   $("#invite").submit(function() {
     value = $(this).find("input[name=email]").val();
     Invites.insert({
       'dashId': Session.get("db")._id,
       'email': value,
+    });
+    return false;
+  });
+
+  $("#addDashboard").unbind();
+  $("#addDashboard").submit(function() {
+    console.log("HI");
+    value = $(this).find("input[name=name]").val();
+    Dashboards.insert({
+      name: value,
+      users: [Meteor.userId()],
     });
     return false;
   });
@@ -70,16 +77,6 @@ Template.dashboard.events({
   'click button.dashboard': function(event) {
     dashboard = Dashboards.findOne({_id: event.target.value});
     Session.set("db", dashboard);
-  },
-
-
-  'click button#addDashboard': function (event) {
-    console.log(Meteor.userId());
-    console.log("adddash");
-    Dashboards.insert({
-      name: "Test Dashboard2",
-      users: [Meteor.userId()],
-    });
   },
 
 });
