@@ -26,7 +26,7 @@ _.extend(Latitude.prototype, {
   rendered: function() {
     console.log("fjksla;dfas");
     this.initMap();
-    if(this.locations.length > 0) {
+    if(this.locations != undefined) {
      for (var i = 0; i < this.locations.length; i++) {
 
       wp = new google.maps.LatLng(this.locations[i].lat, this.locations[i].long);
