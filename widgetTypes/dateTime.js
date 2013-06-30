@@ -14,9 +14,15 @@ _.extend(DateTime.prototype, {
   },
   getData: function() {
     var widget = this;
-    Meteor.setInterval(function() {
-      updateDate(widget._id);
-    }, 1000);
+    if (!this.data.hasBeenInit) {
+      console.log("hi");
+      Meteor.setInterval(function() {
+        updateDate(widget._id);
+      }, 1000);
+      toSet = {};
+      toSet['data.hasBeenInit'] = true;
+      Widgets.update(widget._id, {$set: toSet});
+    }
     this.render();
   },
   });
