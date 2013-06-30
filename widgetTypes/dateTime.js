@@ -14,14 +14,12 @@ _.extend(DateTime.prototype, {
   },
   getData: function() {
     var widget = this;
-    if (!this.data.hasBeenInit) {
+    if (!Session.get("hasBeenSet"+widget._id)) {
       console.log("hi");
       Meteor.setInterval(function() {
         updateDate(widget._id);
       }, 1000);
-      toSet = {};
-      toSet['data.hasBeenInit'] = true;
-      Widgets.update(widget._id, {$set: toSet});
+      Session.set("hasBeenSet"+widget._id, true);
     }
     this.render();
   },
