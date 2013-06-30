@@ -14,9 +14,13 @@ _.extend(DateTime.prototype, {
   },
   getData: function() {
     var widget = this;
-    Meteor.setInterval(function() {
-      updateDate(widget._id);
-    }, 1000);
+    if (!Session.get("hasBeenSet"+widget._id)) {
+      console.log("hi");
+      Meteor.setInterval(function() {
+        updateDate(widget._id);
+      }, 1000);
+      Session.set("hasBeenSet"+widget._id, true);
+    }
     this.render();
   },
 });
