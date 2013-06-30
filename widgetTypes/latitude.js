@@ -9,12 +9,8 @@ _.extend(Latitude.prototype, {
   render: function() {
     this.html = this.generateHeader();
     this.html += '<h2>Latitude</h2>';
-    for (var i = 0; i < this.locations.length; i++) {
-      console.log('loc'+ this.locations[0].lat);
-      this.html += '<div> Latitude: ' + this.locations[i].lat + '</div>';
-      this.html += '<div> Longitude: ' + this.locations[i].long + '</div>';
-    }
-    this.html += '<input type="button" class="authButton" value="Auth"/>'
+    this.html += '<div id="map-canvas"></div>';
+    this.html += '<input type="button" class="authButton" value="Auth"/>';
 
     this.html += this.generateFooter();
   },
@@ -30,14 +26,34 @@ _.extend(Latitude.prototype, {
   },
   rendered: function() {
     console.log("fjksla;dfas");
+    this.initMap();
+     for (var i = 0; i < this.locations.length; i++) {
+
+      wp = new google.maps.LatLng(this.locations[i].lat, this.locations[i].long);
+      marker = new google.maps.Marker({position: wp, map: this.map});
+     }
     widget = this;
     $(".authButton").click(function() {
       console.log("ID: " + widget._id);
         auth(widget._id);
     });
-  }
+  },
+
+  initMap: function() {
+    console.log("initMap")
+  var apiKey = 'AIzaSyCuT1vpGKW_urUMZiEHjAxEJInWFCJQTSM';
+  var mapOptions = {
+    zoom: 12,
+    center: new google.maps.LatLng(37.77, -122.4),
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  };
+  this.map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+  console.log("endMap");
+}
      
 });
+
+
 
 function auth(id) {
         var apiKey = 'AIzaSyCuT1vpGKW_urUMZiEHjAxEJInWFCJQTSM';
