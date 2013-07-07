@@ -168,6 +168,7 @@ h1 {
   text-shadow: none;
   transition: 0.2s opacity, 0.2s color, 0.2s text-shadow;
   cursor: pointer;
+  z-index: 2;
 }
 .widget .remove-widget-icon.visible, .widget .edit-widget-icon.visible {
   opacity: 0.5;
@@ -217,6 +218,35 @@ h1 {
 .buildStatus .edit {
   text-align: left;
 }
+.chatBox {
+  padding: 10px;
+  height: 500px;
+  width: 300px;
+  overflow: none;
+  text-align: left;
+}
+.chatBox .content{
+  position: relative;
+  height: 100%;
+}
+.chatBox .chats {
+  height: 90%;
+  overflow-y: auto;
+}
+.chatBox form {
+  position:absolute;
+  bottom: 1%;
+  height: 7%;
+  width: 100%;
+}
+.chatBox input {
+  height: 100%;
+  width: 90%;
+  font-family: "Helvetica Neue";
+  font-size: 17px;
+  padding: 0px 10px;
+}
+
 .iframe iframe{
   height: 99%;
   width: 99%;
@@ -285,4 +315,24 @@ svg {
 
 .innerHeader h2 {
     margin-right: 10px;
+}
+
+
+#welcome {
+  background: rgba(0,0,0,0.2);
+  text-shadow: 2px 2px 3px rgba(0,0,0,0.9);
+  width: 320px;
+  height: 160px;
+  display: inline-block;
+  padding: 15px;
+  margin-top: 5px;
+  margin-left: 5px;
+}
+#welcome h1 {
+  display: block;
+  float: none;
+}
+#welcome p {
+  display: block;
+  float: none;
 }

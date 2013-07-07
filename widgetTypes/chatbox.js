@@ -5,22 +5,25 @@ Chatbox = function(widget) {
 _.extend(Chatbox.prototype, WidgetType);
 
 _.extend(Chatbox.prototype, {
-  widgetTypeName: "dateTime",
+  widgetTypeName: "chatBox",
   render: function() {
     this.html = this.generateHeader();
+    this.html += '<div class="content">';
     if (this.messages != undefined) {
-      for (var i = 0; i < this.messages.length; i++) {
+      this.html += '<div class="chats">';
+      for (var i = this.messages.length - 1; i >= 0; i--) {
         this.html += '<div><b>' + this.messages[i].username + ':</b> ' + this.messages[i].content + '</div>';
       }
+      this.html += '</div>';
       this.html += '<form class="chatbox"><input type="text" name="content"/></form>';
     }
+    this.html += '</div>';
     this.html += this.generateFooter();
   },
   getData: function() {
     this.render();
   },
   rendered: function() {
-
     var widget = this;
     var widgetInDom = this.widgetInDom();
     widgetInDom.find('.chatbox').unbind();
@@ -57,5 +60,5 @@ NewChatbox = function () {
      };
  }
 
-wtToCreate = {typeName: 'Chatbox', className: "Chatbox", icon: "C"};
+wtToCreate = {typeName: 'Chatbox', className: "Chatbox", icon: '"'};
 WidgetTypes.push(wtToCreate);

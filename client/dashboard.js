@@ -21,16 +21,24 @@ var widgets = null;
 
 Template.dashboard.dashboard = function() {
   Session.get("new_widget");
-  if (Session.get('db')) {
-    dashboard = Dashboards.findOne({_id : Session.get('db')._id});
+  if (Meteor.userId() == null) {
+    return Dashboards.findOne({_id : "SAMPLE"});
+  } else if (Session.get('db')) {
+    // find existing dashboard
+    return Dashboards.findOne({_id : Session.get('db')._id});
+  } else {
+    dashboard = Dashboards.findOne({users: Meteor.userId()});
+    if (!dashboard) { return null; }
+    Session.set("db", dashboard);
     return dashboard;
   }
-  dashboard = Dashboards.findOne({users: Meteor.userId()});
-  if (!dashboard) {
-    dashboard = Dashboards.findOne();
-  }
-  Session.set("db", dashboard);
-  return dashboard;
+}
+
+Template.dashboard.newUser = function() {
+  return Meteor.userId() == null;
+}
+Template.dashboard.noDashboards = function() {
+  return Dashboards.findOne({users: Meteor.userId()}) == null;
 }
 
 Template.dashboard.rendered = function() {
