@@ -17,6 +17,7 @@ _.extend(ScoreBoard.prototype, {
     },
     rendered: function() {
         var self = this;
+        var widgetInDom = this.widgetInDom();
         this.setupResizeDragDelete();
 
         if (!self.drawBarGraph) {
@@ -25,22 +26,6 @@ _.extend(ScoreBoard.prototype, {
             });
         }
 
-        var widgetInDom = this.widgetInDom();
-        widgetInDom.unbind();
-        widgetInDom.find("button#addCol").unbind();
-
-        if(!widgetInDom.is('.ui-resizable')) {
-            widgetInDom.resizable({
-                stop: function(event, ui) {
-                          Widgets.update(widget._id, { $set: { 'height': ui.size.height, 'width': ui.size.width } });
-                }
-            });
-            this.widgetInDom().draggable({
-                stop: function(event, ui) {
-                          Widgets.update(widget._id, { $set: { 'position.x': ui.position.left, 'position.y': ui.position.top } });
-                      }
-            });
-        }
 
         widgetInDom.find(".barRect").click(function(d) {
             barClickHandler(d, self, $(this));
@@ -60,18 +45,13 @@ _.extend(ScoreBoard.prototype, {
                 }
             }
 
-            toSet = {};
+            var toSet = {};
             toSet['data.content.' + index + '.key'] = newKeyValue;
             Widgets.update(self._id, { $set: toSet });
         });
 
         widgetInDom.find("button.addCol").click(function(d) {
-            console.log("blargl");
-            toSet = {};
-            toSet['data.content'] = {'key': 'New Column', 'score': 0};
-
-            Widgets.update(self._id, { $push: toSet });
-
+            Widgets.update(self._id, { $push: {'data.content': {'key': 'New Column', 'score': 0} } });
         });
 
         widgetInDom.find(".editClass").click(function(d) {

@@ -102,7 +102,7 @@ h1 {
 #people #login-buttons {
   float: left;
   line-height: 25px;
-  opacity: 0.8;
+  opacity: 1;
 }
 #newWidgets {
   float: right;
